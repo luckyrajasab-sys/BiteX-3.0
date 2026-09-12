@@ -16,14 +16,12 @@ export const AppProvider = ({ children }) => {
   const [favorites, setFavorites] = useState(() => safeParse('favorites', []));
   const [orders, setOrders] = useState(() => safeParse('orders', []));
   const [lastOrder, setLastOrder] = useState(() => localStorage.getItem('lastOrder') || '');
-  const [toast, setToast] = useState(null); // { message, type }
+  const [toast, setToast] = useState(null);
 
-  // New states for BiteX 3.0
+  // Health Data
   const [userGoal, setUserGoal] = useState(() => localStorage.getItem('userGoal') || 'Eat Healthier');
-  
   const defaultMealPlan = { breakfast: [], lunch: [], snacks: [], dinner: [] };
   const [mealPlan, setMealPlan] = useState(() => safeParse('mealPlan', defaultMealPlan));
-  
   const [consumedFoods, setConsumedFoods] = useState(() => safeParse('consumedFoods', []));
   const [waterGlasses, setWaterGlasses] = useState(() => {
     const w = localStorage.getItem('waterGlasses');
@@ -44,13 +42,33 @@ export const AppProvider = ({ children }) => {
     setTimeout(() => setToast(null), 2600);
   };
 
-  const addToCart = (item) => {
-    setCart((prev) => [...prev, item]);
-    showToast(`${item.name} added to cart`);
+  const addToCart = (item, quantity = 1, notes = '') => {
+    setCart((prev) => {
+      const existing = prev.find(i => i.id === item.id);
+      if (existing) {
+        showToast(`Updated quantity for ${item.name}`);
+        return prev.map(i => i.id === item.id ? { ...i, quantity: i.quantity + quantity, notes: notes || i.notes } : i);
+      }
+      showToast(`${item.name} added to cart`);
+      return [...prev, { ...item, quantity, notes }];
+    });
   };
 
-  const removeFromCart = (index) => {
-    setCart((prev) => prev.filter((_, i) => i !== index));
+  const updateCartQuantity = (id, change) => {
+    setCart((prev) => {
+      return prev.map(item => {
+        if (item.id === id) {
+          const newQ = item.quantity + change;
+          return newQ > 0 ? { ...item, quantity: newQ } : item;
+        }
+        return item;
+      });
+    });
+  };
+
+  const removeFromCart = (id) => {
+    setCart((prev) => prev.filter(i => i.id !== id));
+    showToast('Item removed from cart');
   };
 
   const clearCart = () => setCart([]);
@@ -70,26 +88,32 @@ export const AppProvider = ({ children }) => {
 
   const isFavorite = (id) => favorites.some((f) => f.id === id);
 
-  const placeOrder = () => {
+  const placeOrder = (paymentMethod, address) => {
     if (cart.length === 0) {
       showToast('Your cart is empty', 'danger');
       return false;
     }
-    const total = cart.reduce((sum, item) => sum + item.price, 0);
+    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const total = subtotal + 40; // Flat delivery fee
+    
     const newOrder = {
       id: 'BX' + Math.floor(100000 + Math.random() * 900000),
       items: cart,
+      subtotal,
+      deliveryFee: 40,
       total,
+      paymentMethod,
+      address,
       date: new Date().toISOString(),
-      status: 'Preparing',
+      status: 'Placed',
     };
     setOrders((prev) => [newOrder, ...prev]);
     setLastOrder(newOrder.id);
     clearCart();
-    return true;
+    return newOrder.id;
   };
 
-  // New context methods
+  // Health Methods
   const addFoodToMealPlan = (mealType, item) => {
     setMealPlan(prev => ({
       ...prev,
@@ -133,6 +157,7 @@ export const AppProvider = ({ children }) => {
       value={{
         cart,
         addToCart,
+        updateCartQuantity,
         removeFromCart,
         clearCart,
         favorites,

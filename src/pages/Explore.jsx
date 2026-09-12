@@ -1,20 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import FoodCard from '../components/FoodCard';
 import { menuData } from '../data/menu';
 
 const Explore = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
   const [activeFilter, setActiveFilter] = useState('All');
   const [sortBy, setSortBy] = useState('score-desc');
 
   const filters = ['All', 'High Protein', 'Vegan', 'Vegetarian', 'Indian', 'Low Calorie'];
 
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(searchTerm);
+    }, 300);
+    return () => clearTimeout(handler);
+  }, [searchTerm]);
+
   let filtered = menuData.filter(item => {
     if (activeFilter !== 'All') {
       if (!item.tags || !item.tags.includes(activeFilter)) return false;
     }
-    if (searchTerm) {
-      if (!item.name.toLowerCase().includes(searchTerm.toLowerCase())) return false;
+    if (debouncedSearch) {
+      if (!item.name.toLowerCase().includes(debouncedSearch.toLowerCase())) return false;
     }
     return true;
   });
@@ -70,7 +78,12 @@ const Explore = () => {
         {filtered.length > 0 ? filtered.map((item) => (
           <FoodCard key={item.id} item={item} />
         )) : (
-          <p style={{ textAlign: 'center', width: '100%', color: 'var(--text-muted)' }}>No foods found matching your criteria.</p>
+          <div className="empty-state" style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '60px 20px' }}>
+            <div style={{ fontSize: '60px', marginBottom: '20px' }}>🔍</div>
+            <h3>No matching foods found</h3>
+            <p style={{ color: 'var(--text-muted)' }}>Try adjusting your filters or search term.</p>
+            <button className="btn btn-secondary" style={{ marginTop: '20px' }} onClick={() => { setSearchTerm(''); setActiveFilter('All'); }}>Clear Filters</button>
+          </div>
         )}
       </div>
     </div>

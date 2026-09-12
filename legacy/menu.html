@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menu · BiteX 3.0</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<nav class="navbar">
+<a href="index.html" class="logo">
+<svg class="logo-mark" width="32" height="32" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="17" cy="17" r="15" fill="url(#biteGrad)"/>
+<circle cx="25" cy="9" r="7.5" fill="#181220"/>
+<path d="M24 5 L25.6 8 L28.8 6.4 L27 9.4 L30 10.6 L26.6 11.4 L27 14.6 L24.7 12.2 L22.3 14.6 L22.7 11.4 L19.4 10.6 L22.4 9.4 L20.6 6.4 Z" fill="#FF3D57"/>
+<defs>
+<linearGradient id="biteGrad" x1="2" y1="2" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FFB648"/>
+<stop offset="1" stop-color="#FF5A36"/>
+</linearGradient>
+</defs>
+</svg>
+<span>Bite<span class="accent-x">X</span></span>
+<span class="version-pill">3.0</span>
+</a>
+<div class="nav-links">
+<a href="index.html">Home</a>
+<a href="menu.html">Menu</a>
+<a href="restaurants.html">Restaurants</a>
+<a href="favorites.html">Favorites</a>
+<a href="orders.html">Orders</a>
+<a href="cart.html">Cart <span class="cart-badge">0</span></a>
+<a href="profile.html">Profile</a>
+</div>
+</nav>
+
+<section class="section">
+
+<h2 class="section-title">Full Menu</h2>
+<p class="section-sub">100 dishes across 10 cuisines — search or filter to find exactly what you're craving.</p>
+
+<div class="menu-toolbar">
+<input id="menu-search" class="search-box" type="text" placeholder="Search 100+ dishes..." oninput="filterMenu()">
+<div class="filter-chips">
+<button class="filter-chip active" data-category="all" onclick="setFilter(this)">All</button>
+<button class="filter-chip" data-category="pizza" onclick="setFilter(this)">Pizza</button>
+<button class="filter-chip" data-category="burger" onclick="setFilter(this)">Burgers</button>
+<button class="filter-chip" data-category="indian" onclick="setFilter(this)">Indian</button>
+<button class="filter-chip" data-category="chinese" onclick="setFilter(this)">Chinese</button>
+<button class="filter-chip" data-category="seafood" onclick="setFilter(this)">Seafood</button>
+<button class="filter-chip" data-category="salad" onclick="setFilter(this)">Salads</button>
+<button class="filter-chip" data-category="breakfast" onclick="setFilter(this)">Breakfast</button>
+<button class="filter-chip" data-category="dessert" onclick="setFilter(this)">Desserts</button>
+<button class="filter-chip" data-category="drinks" onclick="setFilter(this)">Drinks</button>
+<button class="filter-chip" data-category="sides" onclick="setFilter(this)">Sides</button>
+</div>
+</div>
+
+<div class="food-grid">
+
+<div class="card glass" data-name="Margherita Classic" data-category="pizza">
+<button class="fav-btn" data-name="Margherita Classic" onclick="toggleFavorite('Margherita Classic',249,'https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1200&auto=format&fit=crop">
+<h3>Margherita Classic</h3>
+<p>Stone-baked and loaded fresh</p>
+<div class="price">₹249</div>
+<button class="btn btn-primary" onclick="addToCart('Margherita Classic',249)">Add</button>
+</div>
+
+<div class="card glass" data-name="Pepperoni Feast" data-category="pizza">
+<button class="fav-btn" data-name="Pepperoni Feast" onclick="toggleFavorite('Pepperoni Feast',349,'https://images.unsplash.com/photo-1548365328-9f547fb0953e?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1548365328-9f547fb0953e?q=80&w=1200&auto=format&fit=crop">
+<h3>Pepperoni Feast</h3>
+<p>Hand-tossed, straight from the oven</p>
+<div class="price">₹349</div>
+<button class="btn btn-primary" onclick="addToCart('Pepperoni Feast',349)">Add</button>
+</div>
+
+<div class="card glass" data-name="BBQ Chicken Pizza" data-category="pizza">
+<button class="fav-btn" data-name="BBQ Chicken Pizza" onclick="toggleFavorite('BBQ Chicken Pizza',399,'https://images.unsplash.com/photo-1594007654729-407eedc4be65?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1594007654729-407eedc4be65?q=80&w=1200&auto=format&fit=crop">
+<h3>BBQ Chicken Pizza</h3>
+<p>A wood-fired favorite</p>
+<div class="price">₹399</div>
+<button class="btn btn-primary" onclick="addToCart('BBQ Chicken Pizza',399)">Add</button>
+</div>
+
+<div class="card glass" data-name="Farmhouse Pizza" data-category="pizza">
+<button class="fav-btn" data-name="Farmhouse Pizza" onclick="toggleFavorite('Farmhouse Pizza',329,'https://images.unsplash.com/photo-1571066811602-716837d681de?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1571066811602-716837d681de?q=80&w=1200&auto=format&fit=crop">
+<h3>Farmhouse Pizza</h3>
+<p>Cheesy, saucy, made to order</p>
+<div class="price">₹329</div>
+<button class="btn btn-primary" onclick="addToCart('Farmhouse Pizza',329)">Add</button>
+</div>
+
+<div class="card glass" data-name="Veggie Supreme" data-category="pizza">
+<button class="fav-btn" data-name="Veggie Supreme" onclick="toggleFavorite('Veggie Supreme',299,'https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1200&auto=format&fit=crop">
+<h3>Veggie Supreme</h3>
+<p>Stone-baked and loaded fresh</p>
+<div class="price">₹299</div>
+<button class="btn btn-primary" onclick="addToCart('Veggie Supreme',299)">Add</button>
+</div>
+
+<div class="card glass" data-name="Four Cheese Pizza" data-category="pizza">
+<button class="fav-btn" data-name="Four Cheese Pizza" onclick="toggleFavorite('Four Cheese Pizza',359,'https://images.unsplash.com/photo-1548365328-9f547fb0953e?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1548365328-9f547fb0953e?q=80&w=1200&auto=format&fit=crop">
+<h3>Four Cheese Pizza</h3>
+<p>Hand-tossed, straight from the oven</p>
+<div class="price">₹359</div>
+<button class="btn btn-primary" onclick="addToCart('Four Cheese Pizza',359)">Add</button>
+</div>
+
+<div class="card glass" data-name="Mexican Green Wave" data-category="pizza">
+<button class="fav-btn" data-name="Mexican Green Wave" onclick="toggleFavorite('Mexican Green Wave',319,'https://images.unsplash.com/photo-1594007654729-407eedc4be65?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1594007654729-407eedc4be65?q=80&w=1200&auto=format&fit=crop">
+<h3>Mexican Green Wave</h3>
+<p>A wood-fired favorite</p>
+<div class="price">₹319</div>
+<button class="btn btn-primary" onclick="addToCart('Mexican Green Wave',319)">Add</button>
+</div>
+
+<div class="card glass" data-name="Peri Peri Paneer Pizza" data-category="pizza">
+<button class="fav-btn" data-name="Peri Peri Paneer Pizza" onclick="toggleFavorite('Peri Peri Paneer Pizza',339,'https://images.unsplash.com/photo-1571066811602-716837d681de?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1571066811602-716837d681de?q=80&w=1200&auto=format&fit=crop">
+<h3>Peri Peri Paneer Pizza</h3>
+<p>Cheesy, saucy, made to order</p>
+<div class="price">₹339</div>
+<button class="btn btn-primary" onclick="addToCart('Peri Peri Paneer Pizza',339)">Add</button>
+</div>
+
+<div class="card glass" data-name="Hawaiian Pizza" data-category="pizza">
+<button class="fav-btn" data-name="Hawaiian Pizza" onclick="toggleFavorite('Hawaiian Pizza',309,'https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1200&auto=format&fit=crop">
+<h3>Hawaiian Pizza</h3>
+<p>Stone-baked and loaded fresh</p>
+<div class="price">₹309</div>
+<button class="btn btn-primary" onclick="addToCart('Hawaiian Pizza',309)">Add</button>
+</div>
+
+<div class="card glass" data-name="Truffle Mushroom Pizza" data-category="pizza">
+<button class="fav-btn" data-name="Truffle Mushroom Pizza" onclick="toggleFavorite('Truffle Mushroom Pizza',429,'https://images.unsplash.com/photo-1548365328-9f547fb0953e?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1548365328-9f547fb0953e?q=80&w=1200&auto=format&fit=crop">
+<h3>Truffle Mushroom Pizza</h3>
+<p>Hand-tossed, straight from the oven</p>
+<div class="price">₹429</div>
+<button class="btn btn-primary" onclick="addToCart('Truffle Mushroom Pizza',429)">Add</button>
+</div>
+
+<div class="card glass" data-name="Classic Cheeseburger" data-category="burger">
+<button class="fav-btn" data-name="Classic Cheeseburger" onclick="toggleFavorite('Classic Cheeseburger',179,'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=1200&auto=format&fit=crop">
+<h3>Classic Cheeseburger</h3>
+<p>Juicy, stacked and grilled fresh</p>
+<div class="price">₹179</div>
+<button class="btn btn-primary" onclick="addToCart('Classic Cheeseburger',179)">Add</button>
+</div>
+
+<div class="card glass" data-name="Double Patty Deluxe" data-category="burger">
+<button class="fav-btn" data-name="Double Patty Deluxe" onclick="toggleFavorite('Double Patty Deluxe',259,'https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=1200&auto=format&fit=crop">
+<h3>Double Patty Deluxe</h3>
+<p>A double-handed classic</p>
+<div class="price">₹259</div>
+<button class="btn btn-primary" onclick="addToCart('Double Patty Deluxe',259)">Add</button>
+</div>
+
+<div class="card glass" data-name="Spicy Chicken Burger" data-category="burger">
+<button class="fav-btn" data-name="Spicy Chicken Burger" onclick="toggleFavorite('Spicy Chicken Burger',219,'https://images.unsplash.com/photo-1553979459-d2229ba7433b?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?q=80&w=1200&auto=format&fit=crop">
+<h3>Spicy Chicken Burger</h3>
+<p>Toasted bun, bold flavor</p>
+<div class="price">₹219</div>
+<button class="btn btn-primary" onclick="addToCart('Spicy Chicken Burger',219)">Add</button>
+</div>
+
+<div class="card glass" data-name="Veggie Delight Burger" data-category="burger">
+<button class="fav-btn" data-name="Veggie Delight Burger" onclick="toggleFavorite('Veggie Delight Burger',169,'https://images.unsplash.com/photo-1571091718767-18b5b1457add?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?q=80&w=1200&auto=format&fit=crop">
+<h3>Veggie Delight Burger</h3>
+<p>Fired up and fully loaded</p>
+<div class="price">₹169</div>
+<button class="btn btn-primary" onclick="addToCart('Veggie Delight Burger',169)">Add</button>
+</div>
+
+<div class="card glass" data-name="BBQ Bacon Burger" data-category="burger">
+<button class="fav-btn" data-name="BBQ Bacon Burger" onclick="toggleFavorite('BBQ Bacon Burger',249,'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=1200&auto=format&fit=crop">
+<h3>BBQ Bacon Burger</h3>
+<p>Juicy, stacked and grilled fresh</p>
+<div class="price">₹249</div>
+<button class="btn btn-primary" onclick="addToCart('BBQ Bacon Burger',249)">Add</button>
+</div>
+
+<div class="card glass" data-name="Mushroom Swiss Burger" data-category="burger">
+<button class="fav-btn" data-name="Mushroom Swiss Burger" onclick="toggleFavorite('Mushroom Swiss Burger',229,'https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=1200&auto=format&fit=crop">
+<h3>Mushroom Swiss Burger</h3>
+<p>A double-handed classic</p>
+<div class="price">₹229</div>
+<button class="btn btn-primary" onclick="addToCart('Mushroom Swiss Burger',229)">Add</button>
+</div>
+
+<div class="card glass" data-name="Paneer Tikka Burger" data-category="burger">
+<button class="fav-btn" data-name="Paneer Tikka Burger" onclick="toggleFavorite('Paneer Tikka Burger',189,'https://images.unsplash.com/photo-1553979459-d2229ba7433b?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?q=80&w=1200&auto=format&fit=crop">
+<h3>Paneer Tikka Burger</h3>
+<p>Toasted bun, bold flavor</p>
+<div class="price">₹189</div>
+<button class="btn btn-primary" onclick="addToCart('Paneer Tikka Burger',189)">Add</button>
+</div>
+
+<div class="card glass" data-name="Crispy Fish Burger" data-category="burger">
+<button class="fav-btn" data-name="Crispy Fish Burger" onclick="toggleFavorite('Crispy Fish Burger',239,'https://images.unsplash.com/photo-1571091718767-18b5b1457add?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?q=80&w=1200&auto=format&fit=crop">
+<h3>Crispy Fish Burger</h3>
+<p>Fired up and fully loaded</p>
+<div class="price">₹239</div>
+<button class="btn btn-primary" onclick="addToCart('Crispy Fish Burger',239)">Add</button>
+</div>
+
+<div class="card glass" data-name="Smoky Pulled Pork Burger" data-category="burger">
+<button class="fav-btn" data-name="Smoky Pulled Pork Burger" onclick="toggleFavorite('Smoky Pulled Pork Burger',269,'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=1200&auto=format&fit=crop">
+<h3>Smoky Pulled Pork Burger</h3>
+<p>Juicy, stacked and grilled fresh</p>
+<div class="price">₹269</div>
+<button class="btn btn-primary" onclick="addToCart('Smoky Pulled Pork Burger',269)">Add</button>
+</div>
+
+<div class="card glass" data-name="Falafel Burger" data-category="burger">
+<button class="fav-btn" data-name="Falafel Burger" onclick="toggleFavorite('Falafel Burger',199,'https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=1200&auto=format&fit=crop">
+<h3>Falafel Burger</h3>
+<p>A double-handed classic</p>
+<div class="price">₹199</div>
+<button class="btn btn-primary" onclick="addToCart('Falafel Burger',199)">Add</button>
+</div>
+
+<div class="card glass" data-name="Butter Chicken" data-category="indian">
+<button class="fav-btn" data-name="Butter Chicken" onclick="toggleFavorite('Butter Chicken',329,'https://images.unsplash.com/photo-1701579231349-d7459c40919d?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1701579231349-d7459c40919d?q=80&w=1200&auto=format&fit=crop">
+<h3>Butter Chicken</h3>
+<p>Slow-cooked with authentic spices</p>
+<div class="price">₹329</div>
+<button class="btn btn-primary" onclick="addToCart('Butter Chicken',329)">Add</button>
+</div>
+
+<div class="card glass" data-name="Paneer Tikka Masala" data-category="indian">
+<button class="fav-btn" data-name="Paneer Tikka Masala" onclick="toggleFavorite('Paneer Tikka Masala',289,'https://images.unsplash.com/photo-1631452180519-c014fe946bc7?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1631452180519-c014fe946bc7?q=80&w=1200&auto=format&fit=crop">
+<h3>Paneer Tikka Masala</h3>
+<p>A comforting classic done right</p>
+<div class="price">₹289</div>
+<button class="btn btn-primary" onclick="addToCart('Paneer Tikka Masala',289)">Add</button>
+</div>
+
+<div class="card glass" data-name="Dal Makhani" data-category="indian">
+<button class="fav-btn" data-name="Dal Makhani" onclick="toggleFavorite('Dal Makhani',219,'https://images.unsplash.com/photo-1585937421612-70a008356fbe?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?q=80&w=1200&auto=format&fit=crop">
+<h3>Dal Makhani</h3>
+<p>Rich, aromatic and hearty</p>
+<div class="price">₹219</div>
+<button class="btn btn-primary" onclick="addToCart('Dal Makhani',219)">Add</button>
+</div>
+
+<div class="card glass" data-name="Chicken Biryani" data-category="indian">
+<button class="fav-btn" data-name="Chicken Biryani" onclick="toggleFavorite('Chicken Biryani',299,'https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1200&auto=format&fit=crop">
+<h3>Chicken Biryani</h3>
+<p>Traditional recipe, freshly prepared</p>
+<div class="price">₹299</div>
+<button class="btn btn-primary" onclick="addToCart('Chicken Biryani',299)">Add</button>
+</div>
+
+<div class="card glass" data-name="Veg Biryani" data-category="indian">
+<button class="fav-btn" data-name="Veg Biryani" onclick="toggleFavorite('Veg Biryani',229,'https://images.unsplash.com/photo-1601050690597-df0568f70950?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?q=80&w=1200&auto=format&fit=crop">
+<h3>Veg Biryani</h3>
+<p>Slow-cooked with authentic spices</p>
+<div class="price">₹229</div>
+<button class="btn btn-primary" onclick="addToCart('Veg Biryani',229)">Add</button>
+</div>
+
+<div class="card glass" data-name="Rogan Josh" data-category="indian">
+<button class="fav-btn" data-name="Rogan Josh" onclick="toggleFavorite('Rogan Josh',349,'https://images.unsplash.com/photo-1701579231349-d7459c40919d?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1701579231349-d7459c40919d?q=80&w=1200&auto=format&fit=crop">
+<h3>Rogan Josh</h3>
+<p>A comforting classic done right</p>
+<div class="price">₹349</div>
+<button class="btn btn-primary" onclick="addToCart('Rogan Josh',349)">Add</button>
+</div>
+
+<div class="card glass" data-name="Palak Paneer" data-category="indian">
+<button class="fav-btn" data-name="Palak Paneer" onclick="toggleFavorite('Palak Paneer',259,'https://images.unsplash.com/photo-1631452180519-c014fe946bc7?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1631452180519-c014fe946bc7?q=80&w=1200&auto=format&fit=crop">
+<h3>Palak Paneer</h3>
+<p>Rich, aromatic and hearty</p>
+<div class="price">₹259</div>
+<button class="btn btn-primary" onclick="addToCart('Palak Paneer',259)">Add</button>
+</div>
+
+<div class="card glass" data-name="Chole Bhature" data-category="indian">
+<button class="fav-btn" data-name="Chole Bhature" onclick="toggleFavorite('Chole Bhature',189,'https://images.unsplash.com/photo-1585937421612-70a008356fbe?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?q=80&w=1200&auto=format&fit=crop">
+<h3>Chole Bhature</h3>
+<p>Traditional recipe, freshly prepared</p>
+<div class="price">₹189</div>
+<button class="btn btn-primary" onclick="addToCart('Chole Bhature',189)">Add</button>
+</div>
+
+<div class="card glass" data-name="Malai Kofta" data-category="indian">
+<button class="fav-btn" data-name="Malai Kofta" onclick="toggleFavorite('Malai Kofta',269,'https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1200&auto=format&fit=crop">
+<h3>Malai Kofta</h3>
+<p>Slow-cooked with authentic spices</p>
+<div class="price">₹269</div>
+<button class="btn btn-primary" onclick="addToCart('Malai Kofta',269)">Add</button>
+</div>
+
+<div class="card glass" data-name="Tandoori Chicken (Half)" data-category="indian">
+<button class="fav-btn" data-name="Tandoori Chicken (Half)" onclick="toggleFavorite('Tandoori Chicken (Half)',319,'https://images.unsplash.com/photo-1601050690597-df0568f70950?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?q=80&w=1200&auto=format&fit=crop">
+<h3>Tandoori Chicken (Half)</h3>
+<p>A comforting classic done right</p>
+<div class="price">₹319</div>
+<button class="btn btn-primary" onclick="addToCart('Tandoori Chicken (Half)',319)">Add</button>
+</div>
+
+<div class="card glass" data-name="Hyderabadi Biryani" data-category="indian">
+<button class="fav-btn" data-name="Hyderabadi Biryani" onclick="toggleFavorite('Hyderabadi Biryani',309,'https://images.unsplash.com/photo-1701579231349-d7459c40919d?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1701579231349-d7459c40919d?q=80&w=1200&auto=format&fit=crop">
+<h3>Hyderabadi Biryani</h3>
+<p>Rich, aromatic and hearty</p>
+<div class="price">₹309</div>
+<button class="btn btn-primary" onclick="addToCart('Hyderabadi Biryani',309)">Add</button>
+</div>
+
+<div class="card glass" data-name="Garlic Naan" data-category="indian">
+<button class="fav-btn" data-name="Garlic Naan" onclick="toggleFavorite('Garlic Naan',69,'https://images.unsplash.com/photo-1631452180519-c014fe946bc7?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1631452180519-c014fe946bc7?q=80&w=1200&auto=format&fit=crop">
+<h3>Garlic Naan</h3>
+<p>Traditional recipe, freshly prepared</p>
+<div class="price">₹69</div>
+<button class="btn btn-primary" onclick="addToCart('Garlic Naan',69)">Add</button>
+</div>
+
+<div class="card glass" data-name="Butter Naan" data-category="indian">
+<button class="fav-btn" data-name="Butter Naan" onclick="toggleFavorite('Butter Naan',59,'https://images.unsplash.com/photo-1585937421612-70a008356fbe?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?q=80&w=1200&auto=format&fit=crop">
+<h3>Butter Naan</h3>
+<p>Slow-cooked with authentic spices</p>
+<div class="price">₹59</div>
+<button class="btn btn-primary" onclick="addToCart('Butter Naan',59)">Add</button>
+</div>
+
+<div class="card glass" data-name="Masala Dosa" data-category="indian">
+<button class="fav-btn" data-name="Masala Dosa" onclick="toggleFavorite('Masala Dosa',149,'https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1200&auto=format&fit=crop">
+<h3>Masala Dosa</h3>
+<p>A comforting classic done right</p>
+<div class="price">₹149</div>
+<button class="btn btn-primary" onclick="addToCart('Masala Dosa',149)">Add</button>
+</div>
+
+<div class="card glass" data-name="Idli Sambar" data-category="indian">
+<button class="fav-btn" data-name="Idli Sambar" onclick="toggleFavorite('Idli Sambar',99,'https://images.unsplash.com/photo-1601050690597-df0568f70950?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?q=80&w=1200&auto=format&fit=crop">
+<h3>Idli Sambar</h3>
+<p>Rich, aromatic and hearty</p>
+<div class="price">₹99</div>
+<button class="btn btn-primary" onclick="addToCart('Idli Sambar',99)">Add</button>
+</div>
+
+<div class="card glass" data-name="Medu Vada" data-category="indian">
+<button class="fav-btn" data-name="Medu Vada" onclick="toggleFavorite('Medu Vada',89,'https://images.unsplash.com/photo-1701579231349-d7459c40919d?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1701579231349-d7459c40919d?q=80&w=1200&auto=format&fit=crop">
+<h3>Medu Vada</h3>
+<p>Traditional recipe, freshly prepared</p>
+<div class="price">₹89</div>
+<button class="btn btn-primary" onclick="addToCart('Medu Vada',89)">Add</button>
+</div>
+
+<div class="card glass" data-name="Rava Dosa" data-category="indian">
+<button class="fav-btn" data-name="Rava Dosa" onclick="toggleFavorite('Rava Dosa',159,'https://images.unsplash.com/photo-1631452180519-c014fe946bc7?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1631452180519-c014fe946bc7?q=80&w=1200&auto=format&fit=crop">
+<h3>Rava Dosa</h3>
+<p>Slow-cooked with authentic spices</p>
+<div class="price">₹159</div>
+<button class="btn btn-primary" onclick="addToCart('Rava Dosa',159)">Add</button>
+</div>
+
+<div class="card glass" data-name="Pongal" data-category="indian">
+<button class="fav-btn" data-name="Pongal" onclick="toggleFavorite('Pongal',119,'https://images.unsplash.com/photo-1585937421612-70a008356fbe?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?q=80&w=1200&auto=format&fit=crop">
+<h3>Pongal</h3>
+<p>A comforting classic done right</p>
+<div class="price">₹119</div>
+<button class="btn btn-primary" onclick="addToCart('Pongal',119)">Add</button>
+</div>
+
+<div class="card glass" data-name="Veg Manchurian" data-category="chinese">
+<button class="fav-btn" data-name="Veg Manchurian" onclick="toggleFavorite('Veg Manchurian',199,'https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1200&auto=format&fit=crop">
+<h3>Veg Manchurian</h3>
+<p>Wok-tossed and full of flavor</p>
+<div class="price">₹199</div>
+<button class="btn btn-primary" onclick="addToCart('Veg Manchurian',199)">Add</button>
+</div>
+
+<div class="card glass" data-name="Chicken Fried Rice" data-category="chinese">
+<button class="fav-btn" data-name="Chicken Fried Rice" onclick="toggleFavorite('Chicken Fried Rice',219,'https://images.unsplash.com/photo-1585238341267-fbeb28390e7d?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1585238341267-fbeb28390e7d?q=80&w=1200&auto=format&fit=crop">
+<h3>Chicken Fried Rice</h3>
+<p>Fiery, saucy and satisfying</p>
+<div class="price">₹219</div>
+<button class="btn btn-primary" onclick="addToCart('Chicken Fried Rice',219)">Add</button>
+</div>
+
+<div class="card glass" data-name="Hakka Noodles" data-category="chinese">
+<button class="fav-btn" data-name="Hakka Noodles" onclick="toggleFavorite('Hakka Noodles',189,'https://images.unsplash.com/photo-1555126634-323283e090fa?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1555126634-323283e090fa?q=80&w=1200&auto=format&fit=crop">
+<h3>Hakka Noodles</h3>
+<p>A takeout favorite made fresh</p>
+<div class="price">₹189</div>
+<button class="btn btn-primary" onclick="addToCart('Hakka Noodles',189)">Add</button>
+</div>
+
+<div class="card glass" data-name="Chilli Paneer" data-category="chinese">
+<button class="fav-btn" data-name="Chilli Paneer" onclick="toggleFavorite('Chilli Paneer',229,'https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1200&auto=format&fit=crop">
+<h3>Chilli Paneer</h3>
+<p>Bold Indo-Chinese flavors</p>
+<div class="price">₹229</div>
+<button class="btn btn-primary" onclick="addToCart('Chilli Paneer',229)">Add</button>
+</div>
+
+<div class="card glass" data-name="Kung Pao Chicken" data-category="chinese">
+<button class="fav-btn" data-name="Kung Pao Chicken" onclick="toggleFavorite('Kung Pao Chicken',259,'https://images.unsplash.com/photo-1585238341267-fbeb28390e7d?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1585238341267-fbeb28390e7d?q=80&w=1200&auto=format&fit=crop">
+<h3>Kung Pao Chicken</h3>
+<p>Wok-tossed and full of flavor</p>
+<div class="price">₹259</div>
+<button class="btn btn-primary" onclick="addToCart('Kung Pao Chicken',259)">Add</button>
+</div>
+
+<div class="card glass" data-name="Spring Rolls" data-category="chinese">
+<button class="fav-btn" data-name="Spring Rolls" onclick="toggleFavorite('Spring Rolls',149,'https://images.unsplash.com/photo-1555126634-323283e090fa?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1555126634-323283e090fa?q=80&w=1200&auto=format&fit=crop">
+<h3>Spring Rolls</h3>
+<p>Fiery, saucy and satisfying</p>
+<div class="price">₹149</div>
+<button class="btn btn-primary" onclick="addToCart('Spring Rolls',149)">Add</button>
+</div>
+
+<div class="card glass" data-name="Schezwan Fried Rice" data-category="chinese">
+<button class="fav-btn" data-name="Schezwan Fried Rice" onclick="toggleFavorite('Schezwan Fried Rice',209,'https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1200&auto=format&fit=crop">
+<h3>Schezwan Fried Rice</h3>
+<p>A takeout favorite made fresh</p>
+<div class="price">₹209</div>
+<button class="btn btn-primary" onclick="addToCart('Schezwan Fried Rice',209)">Add</button>
+</div>
+
+<div class="card glass" data-name="Honey Chilli Potato" data-category="chinese">
+<button class="fav-btn" data-name="Honey Chilli Potato" onclick="toggleFavorite('Honey Chilli Potato',179,'https://images.unsplash.com/photo-1585238341267-fbeb28390e7d?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1585238341267-fbeb28390e7d?q=80&w=1200&auto=format&fit=crop">
+<h3>Honey Chilli Potato</h3>
+<p>Bold Indo-Chinese flavors</p>
+<div class="price">₹179</div>
+<button class="btn btn-primary" onclick="addToCart('Honey Chilli Potato',179)">Add</button>
+</div>
+
+<div class="card glass" data-name="Dragon Chicken" data-category="chinese">
+<button class="fav-btn" data-name="Dragon Chicken" onclick="toggleFavorite('Dragon Chicken',269,'https://images.unsplash.com/photo-1555126634-323283e090fa?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1555126634-323283e090fa?q=80&w=1200&auto=format&fit=crop">
+<h3>Dragon Chicken</h3>
+<p>Wok-tossed and full of flavor</p>
+<div class="price">₹269</div>
+<button class="btn btn-primary" onclick="addToCart('Dragon Chicken',269)">Add</button>
+</div>
+
+<div class="card glass" data-name="Veg Hakka Noodles" data-category="chinese">
+<button class="fav-btn" data-name="Veg Hakka Noodles" onclick="toggleFavorite('Veg Hakka Noodles',179,'https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=1200&auto=format&fit=crop">
+<h3>Veg Hakka Noodles</h3>
+<p>Fiery, saucy and satisfying</p>
+<div class="price">₹179</div>
+<button class="btn btn-primary" onclick="addToCart('Veg Hakka Noodles',179)">Add</button>
+</div>
+
+<div class="card glass" data-name="Grilled Salmon" data-category="seafood">
+<button class="fav-btn" data-name="Grilled Salmon" onclick="toggleFavorite('Grilled Salmon',449,'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?q=80&w=1200&auto=format&fit=crop">
+<h3>Grilled Salmon</h3>
+<p>Fresh catch, simply seasoned</p>
+<div class="price">₹449</div>
+<button class="btn btn-primary" onclick="addToCart('Grilled Salmon',449)">Add</button>
+</div>
+
+<div class="card glass" data-name="Prawn Curry" data-category="seafood">
+<button class="fav-btn" data-name="Prawn Curry" onclick="toggleFavorite('Prawn Curry',399,'https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1200&auto=format&fit=crop">
+<h3>Prawn Curry</h3>
+<p>Grilled to perfection</p>
+<div class="price">₹399</div>
+<button class="btn btn-primary" onclick="addToCart('Prawn Curry',399)">Add</button>
+</div>
+
+<div class="card glass" data-name="Fish Tikka" data-category="seafood">
+<button class="fav-btn" data-name="Fish Tikka" onclick="toggleFavorite('Fish Tikka',349,'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?q=80&w=1200&auto=format&fit=crop">
+<h3>Fish Tikka</h3>
+<p>Coastal flavors in every bite</p>
+<div class="price">₹349</div>
+<button class="btn btn-primary" onclick="addToCart('Fish Tikka',349)">Add</button>
+</div>
+
+<div class="card glass" data-name="Butter Garlic Shrimp" data-category="seafood">
+<button class="fav-btn" data-name="Butter Garlic Shrimp" onclick="toggleFavorite('Butter Garlic Shrimp',429,'https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1200&auto=format&fit=crop">
+<h3>Butter Garlic Shrimp</h3>
+<p>Light, fresh and full of flavor</p>
+<div class="price">₹429</div>
+<button class="btn btn-primary" onclick="addToCart('Butter Garlic Shrimp',429)">Add</button>
+</div>
+
+<div class="card glass" data-name="Fish and Chips" data-category="seafood">
+<button class="fav-btn" data-name="Fish and Chips" onclick="toggleFavorite('Fish and Chips',319,'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?q=80&w=1200&auto=format&fit=crop">
+<h3>Fish and Chips</h3>
+<p>Fresh catch, simply seasoned</p>
+<div class="price">₹319</div>
+<button class="btn btn-primary" onclick="addToCart('Fish and Chips',319)">Add</button>
+</div>
+
+<div class="card glass" data-name="Crab Cakes" data-category="seafood">
+<button class="fav-btn" data-name="Crab Cakes" onclick="toggleFavorite('Crab Cakes',389,'https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1200&auto=format&fit=crop">
+<h3>Crab Cakes</h3>
+<p>Grilled to perfection</p>
+<div class="price">₹389</div>
+<button class="btn btn-primary" onclick="addToCart('Crab Cakes',389)">Add</button>
+</div>
+
+<div class="card glass" data-name="Tandoori Fish" data-category="seafood">
+<button class="fav-btn" data-name="Tandoori Fish" onclick="toggleFavorite('Tandoori Fish',359,'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?q=80&w=1200&auto=format&fit=crop">
+<h3>Tandoori Fish</h3>
+<p>Coastal flavors in every bite</p>
+<div class="price">₹359</div>
+<button class="btn btn-primary" onclick="addToCart('Tandoori Fish',359)">Add</button>
+</div>
+
+<div class="card glass" data-name="Goan Fish Curry" data-category="seafood">
+<button class="fav-btn" data-name="Goan Fish Curry" onclick="toggleFavorite('Goan Fish Curry',369,'https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1200&auto=format&fit=crop">
+<h3>Goan Fish Curry</h3>
+<p>Light, fresh and full of flavor</p>
+<div class="price">₹369</div>
+<button class="btn btn-primary" onclick="addToCart('Goan Fish Curry',369)">Add</button>
+</div>
+
+<div class="card glass" data-name="Caesar Salad" data-category="salad">
+<button class="fav-btn" data-name="Caesar Salad" onclick="toggleFavorite('Caesar Salad',189,'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1200&auto=format&fit=crop">
+<h3>Caesar Salad</h3>
+<p>Crisp, fresh and light</p>
+<div class="price">₹189</div>
+<button class="btn btn-primary" onclick="addToCart('Caesar Salad',189)">Add</button>
+</div>
+
+<div class="card glass" data-name="Greek Salad" data-category="salad">
+<button class="fav-btn" data-name="Greek Salad" onclick="toggleFavorite('Greek Salad',199,'https://images.unsplash.com/photo-1540420773420-3366772f4999?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?q=80&w=1200&auto=format&fit=crop">
+<h3>Greek Salad</h3>
+<p>A wholesome bowl of goodness</p>
+<div class="price">₹199</div>
+<button class="btn btn-primary" onclick="addToCart('Greek Salad',199)">Add</button>
+</div>
+
+<div class="card glass" data-name="Quinoa Power Bowl" data-category="salad">
+<button class="fav-btn" data-name="Quinoa Power Bowl" onclick="toggleFavorite('Quinoa Power Bowl',229,'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1200&auto=format&fit=crop">
+<h3>Quinoa Power Bowl</h3>
+<p>Packed with nutrients and flavor</p>
+<div class="price">₹229</div>
+<button class="btn btn-primary" onclick="addToCart('Quinoa Power Bowl',229)">Add</button>
+</div>
+
+<div class="card glass" data-name="Buddha Bowl" data-category="salad">
+<button class="fav-btn" data-name="Buddha Bowl" onclick="toggleFavorite('Buddha Bowl',249,'https://images.unsplash.com/photo-1540420773420-3366772f4999?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?q=80&w=1200&auto=format&fit=crop">
+<h3>Buddha Bowl</h3>
+<p>Fresh greens, perfectly dressed</p>
+<div class="price">₹249</div>
+<button class="btn btn-primary" onclick="addToCart('Buddha Bowl',249)">Add</button>
+</div>
+
+<div class="card glass" data-name="Sprouts &amp; Veggie Salad" data-category="salad">
+<button class="fav-btn" data-name="Sprouts &amp; Veggie Salad" onclick="toggleFavorite('Sprouts & Veggie Salad',149,'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1200&auto=format&fit=crop">
+<h3>Sprouts &amp; Veggie Salad</h3>
+<p>Crisp, fresh and light</p>
+<div class="price">₹149</div>
+<button class="btn btn-primary" onclick="addToCart('Sprouts & Veggie Salad',149)">Add</button>
+</div>
+
+<div class="card glass" data-name="Fresh Fruit Salad" data-category="salad">
+<button class="fav-btn" data-name="Fresh Fruit Salad" onclick="toggleFavorite('Fresh Fruit Salad',129,'https://images.unsplash.com/photo-1540420773420-3366772f4999?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?q=80&w=1200&auto=format&fit=crop">
+<h3>Fresh Fruit Salad</h3>
+<p>A wholesome bowl of goodness</p>
+<div class="price">₹129</div>
+<button class="btn btn-primary" onclick="addToCart('Fresh Fruit Salad',129)">Add</button>
+</div>
+
+<div class="card glass" data-name="Grilled Chicken Salad" data-category="salad">
+<button class="fav-btn" data-name="Grilled Chicken Salad" onclick="toggleFavorite('Grilled Chicken Salad',259,'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1200&auto=format&fit=crop">
+<h3>Grilled Chicken Salad</h3>
+<p>Packed with nutrients and flavor</p>
+<div class="price">₹259</div>
+<button class="btn btn-primary" onclick="addToCart('Grilled Chicken Salad',259)">Add</button>
+</div>
+
+<div class="card glass" data-name="Mediterranean Bowl" data-category="salad">
+<button class="fav-btn" data-name="Mediterranean Bowl" onclick="toggleFavorite('Mediterranean Bowl',239,'https://images.unsplash.com/photo-1540420773420-3366772f4999?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?q=80&w=1200&auto=format&fit=crop">
+<h3>Mediterranean Bowl</h3>
+<p>Fresh greens, perfectly dressed</p>
+<div class="price">₹239</div>
+<button class="btn btn-primary" onclick="addToCart('Mediterranean Bowl',239)">Add</button>
+</div>
+
+<div class="card glass" data-name="Avocado Toast" data-category="breakfast">
+<button class="fav-btn" data-name="Avocado Toast" onclick="toggleFavorite('Avocado Toast',199,'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?q=80&w=1200&auto=format&fit=crop">
+<h3>Avocado Toast</h3>
+<p>The perfect way to start the day</p>
+<div class="price">₹199</div>
+<button class="btn btn-primary" onclick="addToCart('Avocado Toast',199)">Add</button>
+</div>
+
+<div class="card glass" data-name="Fluffy Pancakes" data-category="breakfast">
+<button class="fav-btn" data-name="Fluffy Pancakes" onclick="toggleFavorite('Fluffy Pancakes',179,'https://images.unsplash.com/photo-1533630774527-e64bfa079f0e?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1533630774527-e64bfa079f0e?q=80&w=1200&auto=format&fit=crop">
+<h3>Fluffy Pancakes</h3>
+<p>Warm, comforting and filling</p>
+<div class="price">₹179</div>
+<button class="btn btn-primary" onclick="addToCart('Fluffy Pancakes',179)">Add</button>
+</div>
+
+<div class="card glass" data-name="French Toast" data-category="breakfast">
+<button class="fav-btn" data-name="French Toast" onclick="toggleFavorite('French Toast',169,'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?q=80&w=1200&auto=format&fit=crop">
+<h3>French Toast</h3>
+<p>A morning favorite</p>
+<div class="price">₹169</div>
+<button class="btn btn-primary" onclick="addToCart('French Toast',169)">Add</button>
+</div>
+
+<div class="card glass" data-name="Poha" data-category="breakfast">
+<button class="fav-btn" data-name="Poha" onclick="toggleFavorite('Poha',89,'https://images.unsplash.com/photo-1533630774527-e64bfa079f0e?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1533630774527-e64bfa079f0e?q=80&w=1200&auto=format&fit=crop">
+<h3>Poha</h3>
+<p>Fresh off the griddle</p>
+<div class="price">₹89</div>
+<button class="btn btn-primary" onclick="addToCart('Poha',89)">Add</button>
+</div>
+
+<div class="card glass" data-name="Upma" data-category="breakfast">
+<button class="fav-btn" data-name="Upma" onclick="toggleFavorite('Upma',89,'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?q=80&w=1200&auto=format&fit=crop">
+<h3>Upma</h3>
+<p>The perfect way to start the day</p>
+<div class="price">₹89</div>
+<button class="btn btn-primary" onclick="addToCart('Upma',89)">Add</button>
+</div>
+
+<div class="card glass" data-name="Aloo Paratha" data-category="breakfast">
+<button class="fav-btn" data-name="Aloo Paratha" onclick="toggleFavorite('Aloo Paratha',99,'https://images.unsplash.com/photo-1533630774527-e64bfa079f0e?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1533630774527-e64bfa079f0e?q=80&w=1200&auto=format&fit=crop">
+<h3>Aloo Paratha</h3>
+<p>Warm, comforting and filling</p>
+<div class="price">₹99</div>
+<button class="btn btn-primary" onclick="addToCart('Aloo Paratha',99)">Add</button>
+</div>
+
+<div class="card glass" data-name="Chole Kulche" data-category="breakfast">
+<button class="fav-btn" data-name="Chole Kulche" onclick="toggleFavorite('Chole Kulche',149,'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?q=80&w=1200&auto=format&fit=crop">
+<h3>Chole Kulche</h3>
+<p>A morning favorite</p>
+<div class="price">₹149</div>
+<button class="btn btn-primary" onclick="addToCart('Chole Kulche',149)">Add</button>
+</div>
+
+<div class="card glass" data-name="Classic Omelette Platter" data-category="breakfast">
+<button class="fav-btn" data-name="Classic Omelette Platter" onclick="toggleFavorite('Classic Omelette Platter',139,'https://images.unsplash.com/photo-1533630774527-e64bfa079f0e?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1533630774527-e64bfa079f0e?q=80&w=1200&auto=format&fit=crop">
+<h3>Classic Omelette Platter</h3>
+<p>Fresh off the griddle</p>
+<div class="price">₹139</div>
+<button class="btn btn-primary" onclick="addToCart('Classic Omelette Platter',139)">Add</button>
+</div>
+
+<div class="card glass" data-name="Chocolate Lava Cake" data-category="dessert">
+<button class="fav-btn" data-name="Chocolate Lava Cake" onclick="toggleFavorite('Chocolate Lava Cake',179,'https://images.unsplash.com/photo-1624353365286-3f8d62daad51?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1624353365286-3f8d62daad51?q=80&w=1200&auto=format&fit=crop">
+<h3>Chocolate Lava Cake</h3>
+<p>Rich, indulgent and satisfying</p>
+<div class="price">₹179</div>
+<button class="btn btn-primary" onclick="addToCart('Chocolate Lava Cake',179)">Add</button>
+</div>
+
+<div class="card glass" data-name="Gulab Jamun (2 pc)" data-category="dessert">
+<button class="fav-btn" data-name="Gulab Jamun (2 pc)" onclick="toggleFavorite('Gulab Jamun (2 pc)',89,'https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=1200&auto=format&fit=crop">
+<h3>Gulab Jamun (2 pc)</h3>
+<p>A sweet way to finish the meal</p>
+<div class="price">₹89</div>
+<button class="btn btn-primary" onclick="addToCart('Gulab Jamun (2 pc)',89)">Add</button>
+</div>
+
+<div class="card glass" data-name="New York Cheesecake" data-category="dessert">
+<button class="fav-btn" data-name="New York Cheesecake" onclick="toggleFavorite('New York Cheesecake',219,'https://images.unsplash.com/photo-1565958011703-44f9829ba187?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?q=80&w=1200&auto=format&fit=crop">
+<h3>New York Cheesecake</h3>
+<p>Decadent and freshly made</p>
+<div class="price">₹219</div>
+<button class="btn btn-primary" onclick="addToCart('New York Cheesecake',219)">Add</button>
+</div>
+
+<div class="card glass" data-name="Tiramisu" data-category="dessert">
+<button class="fav-btn" data-name="Tiramisu" onclick="toggleFavorite('Tiramisu',229,'https://images.unsplash.com/photo-1624353365286-3f8d62daad51?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1624353365286-3f8d62daad51?q=80&w=1200&auto=format&fit=crop">
+<h3>Tiramisu</h3>
+<p>Everyone's favorite treat</p>
+<div class="price">₹229</div>
+<button class="btn btn-primary" onclick="addToCart('Tiramisu',229)">Add</button>
+</div>
+
+<div class="card glass" data-name="Rasmalai (2 pc)" data-category="dessert">
+<button class="fav-btn" data-name="Rasmalai (2 pc)" onclick="toggleFavorite('Rasmalai (2 pc)',99,'https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=1200&auto=format&fit=crop">
+<h3>Rasmalai (2 pc)</h3>
+<p>Rich, indulgent and satisfying</p>
+<div class="price">₹99</div>
+<button class="btn btn-primary" onclick="addToCart('Rasmalai (2 pc)',99)">Add</button>
+</div>
+
+<div class="card glass" data-name="Brownie Sundae" data-category="dessert">
+<button class="fav-btn" data-name="Brownie Sundae" onclick="toggleFavorite('Brownie Sundae',199,'https://images.unsplash.com/photo-1565958011703-44f9829ba187?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?q=80&w=1200&auto=format&fit=crop">
+<h3>Brownie Sundae</h3>
+<p>A sweet way to finish the meal</p>
+<div class="price">₹199</div>
+<button class="btn btn-primary" onclick="addToCart('Brownie Sundae',199)">Add</button>
+</div>
+
+<div class="card glass" data-name="Kulfi Stick" data-category="dessert">
+<button class="fav-btn" data-name="Kulfi Stick" onclick="toggleFavorite('Kulfi Stick',79,'https://images.unsplash.com/photo-1624353365286-3f8d62daad51?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1624353365286-3f8d62daad51?q=80&w=1200&auto=format&fit=crop">
+<h3>Kulfi Stick</h3>
+<p>Decadent and freshly made</p>
+<div class="price">₹79</div>
+<button class="btn btn-primary" onclick="addToCart('Kulfi Stick',79)">Add</button>
+</div>
+
+<div class="card glass" data-name="Red Velvet Cake Slice" data-category="dessert">
+<button class="fav-btn" data-name="Red Velvet Cake Slice" onclick="toggleFavorite('Red Velvet Cake Slice',189,'https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=1200&auto=format&fit=crop">
+<h3>Red Velvet Cake Slice</h3>
+<p>Everyone's favorite treat</p>
+<div class="price">₹189</div>
+<button class="btn btn-primary" onclick="addToCart('Red Velvet Cake Slice',189)">Add</button>
+</div>
+
+<div class="card glass" data-name="Classic Ice Cream Sundae" data-category="dessert">
+<button class="fav-btn" data-name="Classic Ice Cream Sundae" onclick="toggleFavorite('Classic Ice Cream Sundae',159,'https://images.unsplash.com/photo-1565958011703-44f9829ba187?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?q=80&w=1200&auto=format&fit=crop">
+<h3>Classic Ice Cream Sundae</h3>
+<p>Rich, indulgent and satisfying</p>
+<div class="price">₹159</div>
+<button class="btn btn-primary" onclick="addToCart('Classic Ice Cream Sundae',159)">Add</button>
+</div>
+
+<div class="card glass" data-name="Baklava (3 pc)" data-category="dessert">
+<button class="fav-btn" data-name="Baklava (3 pc)" onclick="toggleFavorite('Baklava (3 pc)',149,'https://images.unsplash.com/photo-1624353365286-3f8d62daad51?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1624353365286-3f8d62daad51?q=80&w=1200&auto=format&fit=crop">
+<h3>Baklava (3 pc)</h3>
+<p>A sweet way to finish the meal</p>
+<div class="price">₹149</div>
+<button class="btn btn-primary" onclick="addToCart('Baklava (3 pc)',149)">Add</button>
+</div>
+
+<div class="card glass" data-name="Mango Lassi" data-category="drinks">
+<button class="fav-btn" data-name="Mango Lassi" onclick="toggleFavorite('Mango Lassi',99,'https://images.unsplash.com/photo-1544145945-f90425340c7e?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?q=80&w=1200&auto=format&fit=crop">
+<h3>Mango Lassi</h3>
+<p>Cool, refreshing and revitalizing</p>
+<div class="price">₹99</div>
+<button class="btn btn-primary" onclick="addToCart('Mango Lassi',99)">Add</button>
+</div>
+
+<div class="card glass" data-name="Cold Coffee" data-category="drinks">
+<button class="fav-btn" data-name="Cold Coffee" onclick="toggleFavorite('Cold Coffee',119,'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?q=80&w=1200&auto=format&fit=crop">
+<h3>Cold Coffee</h3>
+<p>Perfectly chilled</p>
+<div class="price">₹119</div>
+<button class="btn btn-primary" onclick="addToCart('Cold Coffee',119)">Add</button>
+</div>
+
+<div class="card glass" data-name="Fresh Lime Soda" data-category="drinks">
+<button class="fav-btn" data-name="Fresh Lime Soda" onclick="toggleFavorite('Fresh Lime Soda',69,'https://images.unsplash.com/photo-1544145945-f90425340c7e?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?q=80&w=1200&auto=format&fit=crop">
+<h3>Fresh Lime Soda</h3>
+<p>A refreshing sip</p>
+<div class="price">₹69</div>
+<button class="btn btn-primary" onclick="addToCart('Fresh Lime Soda',69)">Add</button>
+</div>
+
+<div class="card glass" data-name="Masala Chai" data-category="drinks">
+<button class="fav-btn" data-name="Masala Chai" onclick="toggleFavorite('Masala Chai',49,'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?q=80&w=1200&auto=format&fit=crop">
+<h3>Masala Chai</h3>
+<p>Made fresh to order</p>
+<div class="price">₹49</div>
+<button class="btn btn-primary" onclick="addToCart('Masala Chai',49)">Add</button>
+</div>
+
+<div class="card glass" data-name="Iced Latte" data-category="drinks">
+<button class="fav-btn" data-name="Iced Latte" onclick="toggleFavorite('Iced Latte',129,'https://images.unsplash.com/photo-1544145945-f90425340c7e?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?q=80&w=1200&auto=format&fit=crop">
+<h3>Iced Latte</h3>
+<p>Cool, refreshing and revitalizing</p>
+<div class="price">₹129</div>
+<button class="btn btn-primary" onclick="addToCart('Iced Latte',129)">Add</button>
+</div>
+
+<div class="card glass" data-name="Watermelon Juice" data-category="drinks">
+<button class="fav-btn" data-name="Watermelon Juice" onclick="toggleFavorite('Watermelon Juice',89,'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?q=80&w=1200&auto=format&fit=crop">
+<h3>Watermelon Juice</h3>
+<p>Perfectly chilled</p>
+<div class="price">₹89</div>
+<button class="btn btn-primary" onclick="addToCart('Watermelon Juice',89)">Add</button>
+</div>
+
+<div class="card glass" data-name="Chocolate Shake" data-category="drinks">
+<button class="fav-btn" data-name="Chocolate Shake" onclick="toggleFavorite('Chocolate Shake',149,'https://images.unsplash.com/photo-1544145945-f90425340c7e?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?q=80&w=1200&auto=format&fit=crop">
+<h3>Chocolate Shake</h3>
+<p>A refreshing sip</p>
+<div class="price">₹149</div>
+<button class="btn btn-primary" onclick="addToCart('Chocolate Shake',149)">Add</button>
+</div>
+
+<div class="card glass" data-name="Virgin Mojito" data-category="drinks">
+<button class="fav-btn" data-name="Virgin Mojito" onclick="toggleFavorite('Virgin Mojito',109,'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?q=80&w=1200&auto=format&fit=crop">
+<h3>Virgin Mojito</h3>
+<p>Made fresh to order</p>
+<div class="price">₹109</div>
+<button class="btn btn-primary" onclick="addToCart('Virgin Mojito',109)">Add</button>
+</div>
+
+<div class="card glass" data-name="Cold Coffee Frappe" data-category="drinks">
+<button class="fav-btn" data-name="Cold Coffee Frappe" onclick="toggleFavorite('Cold Coffee Frappe',159,'https://images.unsplash.com/photo-1544145945-f90425340c7e?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?q=80&w=1200&auto=format&fit=crop">
+<h3>Cold Coffee Frappe</h3>
+<p>Cool, refreshing and revitalizing</p>
+<div class="price">₹159</div>
+<button class="btn btn-primary" onclick="addToCart('Cold Coffee Frappe',159)">Add</button>
+</div>
+
+<div class="card glass" data-name="French Fries" data-category="sides">
+<button class="fav-btn" data-name="French Fries" onclick="toggleFavorite('French Fries',99,'https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?q=80&w=1200&auto=format&fit=crop">
+<h3>French Fries</h3>
+<p>Crispy, golden and addictive</p>
+<div class="price">₹99</div>
+<button class="btn btn-primary" onclick="addToCart('French Fries',99)">Add</button>
+</div>
+
+<div class="card glass" data-name="Cheese Fries" data-category="sides">
+<button class="fav-btn" data-name="Cheese Fries" onclick="toggleFavorite('Cheese Fries',149,'https://images.unsplash.com/photo-1585109649139-366815a0d713?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1585109649139-366815a0d713?q=80&w=1200&auto=format&fit=crop">
+<h3>Cheese Fries</h3>
+<p>The perfect companion to any meal</p>
+<div class="price">₹149</div>
+<button class="btn btn-primary" onclick="addToCart('Cheese Fries',149)">Add</button>
+</div>
+
+<div class="card glass" data-name="Garlic Bread" data-category="sides">
+<button class="fav-btn" data-name="Garlic Bread" onclick="toggleFavorite('Garlic Bread',119,'https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?q=80&w=1200&auto=format&fit=crop">
+<h3>Garlic Bread</h3>
+<p>Snack-worthy and shareable</p>
+<div class="price">₹119</div>
+<button class="btn btn-primary" onclick="addToCart('Garlic Bread',119)">Add</button>
+</div>
+
+<div class="card glass" data-name="Onion Rings" data-category="sides">
+<button class="fav-btn" data-name="Onion Rings" onclick="toggleFavorite('Onion Rings',109,'https://images.unsplash.com/photo-1585109649139-366815a0d713?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1585109649139-366815a0d713?q=80&w=1200&auto=format&fit=crop">
+<h3>Onion Rings</h3>
+<p>Golden, crispy perfection</p>
+<div class="price">₹109</div>
+<button class="btn btn-primary" onclick="addToCart('Onion Rings',109)">Add</button>
+</div>
+
+<div class="card glass" data-name="Loaded Nachos" data-category="sides">
+<button class="fav-btn" data-name="Loaded Nachos" onclick="toggleFavorite('Loaded Nachos',179,'https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?q=80&w=1200&auto=format&fit=crop">
+<h3>Loaded Nachos</h3>
+<p>Crispy, golden and addictive</p>
+<div class="price">₹179</div>
+<button class="btn btn-primary" onclick="addToCart('Loaded Nachos',179)">Add</button>
+</div>
+
+<div class="card glass" data-name="Paneer Pakora" data-category="sides">
+<button class="fav-btn" data-name="Paneer Pakora" onclick="toggleFavorite('Paneer Pakora',159,'https://images.unsplash.com/photo-1585109649139-366815a0d713?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1585109649139-366815a0d713?q=80&w=1200&auto=format&fit=crop">
+<h3>Paneer Pakora</h3>
+<p>The perfect companion to any meal</p>
+<div class="price">₹159</div>
+<button class="btn btn-primary" onclick="addToCart('Paneer Pakora',159)">Add</button>
+</div>
+
+<div class="card glass" data-name="Chicken Wings (6 pc)" data-category="sides">
+<button class="fav-btn" data-name="Chicken Wings (6 pc)" onclick="toggleFavorite('Chicken Wings (6 pc)',229,'https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?q=80&w=1200&auto=format&fit=crop">
+<h3>Chicken Wings (6 pc)</h3>
+<p>Snack-worthy and shareable</p>
+<div class="price">₹229</div>
+<button class="btn btn-primary" onclick="addToCart('Chicken Wings (6 pc)',229)">Add</button>
+</div>
+
+<div class="card glass" data-name="Chicken 65" data-category="sides">
+<button class="fav-btn" data-name="Chicken 65" onclick="toggleFavorite('Chicken 65',219,'https://images.unsplash.com/photo-1585109649139-366815a0d713?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1585109649139-366815a0d713?q=80&w=1200&auto=format&fit=crop">
+<h3>Chicken 65</h3>
+<p>Golden, crispy perfection</p>
+<div class="price">₹219</div>
+<button class="btn btn-primary" onclick="addToCart('Chicken 65',219)">Add</button>
+</div>
+
+<div class="card glass" data-name="Peri Peri Fries" data-category="sides">
+<button class="fav-btn" data-name="Peri Peri Fries" onclick="toggleFavorite('Peri Peri Fries',129,'https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?q=80&w=1200&auto=format&fit=crop', this)">♡</button>
+<img src="https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?q=80&w=1200&auto=format&fit=crop">
+<h3>Peri Peri Fries</h3>
+<p>Crispy, golden and addictive</p>
+<div class="price">₹129</div>
+<button class="btn btn-primary" onclick="addToCart('Peri Peri Fries',129)">Add</button>
+</div>
+
+</div>
+
+</section>
+
+<footer class="footer">
+<div>© 2026 BiteX. All rights reserved.</div>
+<div class="footer-links">
+<a href="about.html">About</a>
+<a href="contact.html">Contact</a>
+<a href="favorites.html">Favorites</a>
+<a href="orders.html">Orders</a>
+</div>
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>

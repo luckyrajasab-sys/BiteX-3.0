@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Placed · BiteX</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="error-page">
+<div style="font-size:70px; margin-bottom:10px;">✅</div>
+<h2>Order Placed Successfully</h2>
+<p>Your order <strong id="success-id"></strong> is being prepared. We'll keep you posted every step of the way.</p>
+<div style="display:flex; gap:14px;">
+<a id="track-link" href="track-order.html"><button class="btn btn-primary">Track Order</button></a>
+<a href="menu.html"><button class="btn btn-dark">Order More</button></a>
+</div>
+</div>
+
+<script src="script.js"></script>
+<script>
+const lastOrder = localStorage.getItem("lastOrder");
+if (lastOrder) {
+  document.getElementById("success-id").innerText = lastOrder;
+  document.getElementById("track-link").href = "track-order.html?id=" + lastOrder;
+}
+</script>
+
+</body>
+</html>

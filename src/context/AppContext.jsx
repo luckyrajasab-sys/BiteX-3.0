@@ -18,6 +18,7 @@ export const AppProvider = ({ children }) => {
 
   // E-commerce (Cart, Favorites, Orders)
   const [cart, setCart] = useState(() => safeParse('cart', []));
+  const [isCartOpen, setIsCartOpen] = useState(false);
   const [favorites, setFavorites] = useState(() => safeParse('favorites', []));
   const [orders, setOrders] = useState(() => safeParse('orders', []));
   const [lastOrder, setLastOrder] = useState(() => localStorage.getItem('lastOrder') || '');
@@ -209,6 +210,7 @@ export const AppProvider = ({ children }) => {
         bitePoints, setBitePoints, addBitePoints,
         streak, setStreak,
         cart, addToCart, updateCartQuantity, removeFromCart, clearCart,
+        isCartOpen, setIsCartOpen,
         favorites, toggleFavorite, isFavorite,
         orders, placeOrder, lastOrder,
         toast, showToast,

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AppProvider, AppContext } from './context/AppContext';
 import Navbar from './components/Navbar';
 import Toast from './components/Toast';
+import CartDrawer from './components/CartDrawer';
 
 // Pages
 import Home from './pages/Home';
@@ -53,6 +54,7 @@ const AppRoutes = () => {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/order-success" element={<OrderSuccess />} />
       </Routes>
+      <CartDrawer />
       <Toast />
     </>
   );

@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
 
 const Navbar = () => {
-  const { cart } = useContext(AppContext);
+  const { cart, setIsCartOpen } = useContext(AppContext);
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
@@ -49,10 +49,10 @@ const Navbar = () => {
           <Link to="/dashboard">Nutrition</Link>
           <Link to="/rewards">Rewards</Link>
           <Link to="/profile">Profile</Link>
-          <Link to="/cart" style={{ display: 'flex', alignItems: 'center' }}>
+          <a href="#cart" onClick={(e) => { e.preventDefault(); setIsCartOpen(true); }} style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
             Cart
             {cart.length > 0 && <span className="cart-badge" style={{ display: 'inline-flex' }}>{cart.length}</span>}
-          </Link>
+          </a>
         </div>
 
         {/* Mobile Toggle */}
@@ -79,7 +79,9 @@ const Navbar = () => {
             <Link to="/dashboard">Nutrition</Link>
             <Link to="/rewards">Rewards</Link>
             <Link to="/profile">Profile</Link>
-            <Link to="/cart">Cart {cart.length > 0 && `(${cart.length})`}</Link>
+            <a href="#cart" onClick={(e) => { e.preventDefault(); setIsCartOpen(true); setMenuOpen(false); }} style={{ cursor: 'pointer' }}>
+              Cart {cart.length > 0 && `(${cart.length})`}
+            </a>
           </div>
         )}
       </nav>

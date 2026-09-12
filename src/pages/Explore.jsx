@@ -41,7 +41,14 @@ const Explore = () => {
         <p style={{ color: 'var(--text-muted)' }}>Find the perfect meal to hit your daily macros.</p>
       </div>
 
-      <div className="glass" style={{ padding: '20px', borderRadius: 'var(--radius-md)', marginBottom: '30px', display: 'flex', gap: '20px', flexWrap: 'wrap', alignItems: 'center' }}>
+      <div 
+        className="glass" 
+        style={{ 
+          padding: '20px', borderRadius: 'var(--radius-md)', marginBottom: '30px', 
+          display: 'flex', gap: '20px', flexWrap: 'wrap', alignItems: 'center',
+          position: 'sticky', top: '90px', zIndex: 100 
+        }}
+      >
         <input 
           type="text" 
           placeholder="Search foods..." 

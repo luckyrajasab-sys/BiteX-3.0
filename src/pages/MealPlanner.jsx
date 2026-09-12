@@ -1,94 +1,79 @@
 import React, { useContext, useState } from 'react';
 import { AppContext } from '../context/AppContext';
-import { menuData } from '../data/menu';
 
 const MealPlanner = () => {
-  const { mealPlan, addFoodToMealPlan, removeFoodFromMealPlan } = useContext(AppContext);
-  const [selectedMeal, setSelectedMeal] = useState('breakfast');
-  const [selectedFoodId, setSelectedFoodId] = useState(menuData[0].id);
+  const { weeklyPlan, removeFoodFromWeeklyPlan, calculateDailyMacros } = useContext(AppContext);
+  const [activeDay, setActiveDay] = useState('Monday');
 
-  const handleAdd = () => {
-    const food = menuData.find(f => f.id === selectedFoodId);
-    if (food) {
-      addFoodToMealPlan(selectedMeal, food);
-    }
-  };
+  const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  const mealTypes = ['breakfast', 'lunch', 'snacks', 'dinner'];
 
-  const calculatePlanTotal = () => {
-    let cal = 0, pro = 0;
-    ['breakfast', 'lunch', 'snacks', 'dinner'].forEach(meal => {
-      mealPlan[meal].forEach(item => {
-        cal += item.calories || 0;
-        pro += item.protein || 0;
-      });
+  const currentPlan = weeklyPlan[activeDay];
+
+  const getDayTotalCals = () => {
+    let total = 0;
+    mealTypes.forEach(type => {
+      currentPlan[type].forEach(item => total += item.calories);
     });
-    return { cal, pro };
+    return total;
   };
-
-  const total = calculatePlanTotal();
-
-  const renderMealSection = (mealType, title) => (
-    <div className="dash-card" style={{ marginBottom: '20px' }}>
-      <h3 style={{ marginBottom: '15px', textTransform: 'capitalize' }}>{title}</h3>
-      {mealPlan[mealType].length === 0 ? (
-        <p style={{ color: 'var(--text-muted)', fontSize: '14px' }}>No foods added yet.</p>
-      ) : (
-        <ul style={{ listStyle: 'none', padding: 0 }}>
-          {mealPlan[mealType].map((item, idx) => (
-            <li key={idx} style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0', borderBottom: '1px solid var(--surface-border)' }}>
-              <div>
-                <div>{item.name}</div>
-                <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>🔥 {item.calories} kcal | 🥩 {item.protein}g</div>
-              </div>
-              <button className="btn-secondary" style={{ padding: '5px 10px', fontSize: '12px', height: 'fit-content' }} onClick={() => removeFoodFromMealPlan(mealType, idx)}>X</button>
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
-  );
 
   return (
-    <div style={{ padding: '140px 6% 90px' }}>
+    <div style={{ padding: '140px 6% 90px', maxWidth: '1200px', margin: '0 auto', minHeight: '80vh' }}>
       <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: '40px' }}>Meal Planner</h1>
-        <p style={{ color: 'var(--text-muted)' }}>Plan your day. Hit your goals.</p>
+        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: '40px' }}>Weekly Meal Planner</h1>
+        <p style={{ color: 'var(--text-muted)' }}>Plan your week, hit your macros, and generate your grocery list.</p>
       </div>
 
-      <div className="glass" style={{ padding: '20px', borderRadius: 'var(--radius-md)', marginBottom: '30px', display: 'flex', gap: '15px', flexWrap: 'wrap', alignItems: 'center' }}>
-        <select 
-          value={selectedMeal} 
-          onChange={(e) => setSelectedMeal(e.target.value)}
-          style={{ padding: '10px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--surface-border)', background: 'var(--bg-alt)', color: 'var(--text)' }}
-        >
-          <option value="breakfast">Breakfast</option>
-          <option value="lunch">Lunch</option>
-          <option value="snacks">Snacks</option>
-          <option value="dinner">Dinner</option>
-        </select>
-
-        <select 
-          value={selectedFoodId} 
-          onChange={(e) => setSelectedFoodId(e.target.value)}
-          style={{ padding: '10px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--surface-border)', background: 'var(--bg-alt)', color: 'var(--text)', flex: 1 }}
-        >
-          {menuData.map(item => (
-            <option key={item.id} value={item.id}>{item.name} ({item.calories} kcal)</option>
-          ))}
-        </select>
-
-        <button className="btn btn-primary" onClick={handleAdd}>Add to Plan</button>
+      {/* Day Selector */}
+      <div style={{ display: 'flex', gap: '10px', overflowX: 'auto', paddingBottom: '15px', marginBottom: '30px' }}>
+        {days.map(day => (
+          <button 
+            key={day}
+            className={`btn ${activeDay === day ? 'btn-primary' : 'btn-secondary'}`}
+            style={{ padding: '10px 20px', borderRadius: '30px', flexShrink: 0 }}
+            onClick={() => setActiveDay(day)}
+          >
+            {day}
+          </button>
+        ))}
       </div>
 
-      <div style={{ textAlign: 'right', marginBottom: '20px' }}>
-        <h3 style={{ color: 'var(--accent)' }}>Daily Planned: {total.cal} kcal | {total.pro}g Protein</h3>
+      <div className="glass" style={{ padding: '20px', borderRadius: 'var(--radius-lg)', marginBottom: '30px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--accent-soft)', color: 'var(--accent-2)' }}>
+        <h3 style={{ margin: 0 }}>{activeDay}'s Target</h3>
+        <div style={{ fontSize: '24px', fontWeight: 'bold', color: 'var(--accent)' }}>{getDayTotalCals()} kcal</div>
       </div>
 
-      <div className="dashboard-grid" style={{ marginTop: '0' }}>
-        {renderMealSection('breakfast', 'Breakfast 🍳')}
-        {renderMealSection('lunch', 'Lunch 🍱')}
-        {renderMealSection('snacks', 'Snacks 🍎')}
-        {renderMealSection('dinner', 'Dinner 🥗')}
+      <div className="planner-grid" style={{ display: 'grid', gap: '30px', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
+        {mealTypes.map((type) => (
+          <div key={type} className="meal-section glass" style={{ padding: '25px', borderRadius: 'var(--radius-lg)' }}>
+            <h3 style={{ textTransform: 'capitalize', marginBottom: '15px', borderBottom: '1px solid var(--surface-border)', paddingBottom: '10px' }}>
+              {type}
+            </h3>
+            
+            {currentPlan[type].length === 0 ? (
+              <div style={{ padding: '20px', textAlign: 'center', color: 'var(--text-faint)', background: 'var(--bg-alt)', borderRadius: 'var(--radius-md)', fontSize: '14px' }}>
+                No meals added yet.
+              </div>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                {currentPlan[type].map((item, idx) => (
+                  <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '15px', background: 'var(--bg-alt)', padding: '15px', borderRadius: '12px' }}>
+                    <img src={item.img} alt={item.name} style={{ width: '60px', height: '60px', objectFit: 'cover', borderRadius: '10px' }} />
+                    <div style={{ flex: 1 }}>
+                      <h4 style={{ fontSize: '15px', marginBottom: '4px' }}>{item.name}</h4>
+                      <p style={{ color: 'var(--text-muted)', fontSize: '12px' }}>{item.calories} kcal · {item.protein}g P</p>
+                    </div>
+                    <button 
+                      onClick={() => removeFoodFromWeeklyPlan(activeDay, type, idx)}
+                      style={{ background: 'rgba(239, 68, 68, 0.1)', color: 'var(--danger)', border: 'none', width: '32px', height: '32px', borderRadius: '50%', cursor: 'pointer', transition: '0.2s' }}
+                    >✕</button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );

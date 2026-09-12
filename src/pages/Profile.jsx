@@ -1,74 +1,72 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
-  const { userGoal, setUserGoal } = useContext(AppContext);
+  const { userProfile, logout, bitePoints, streak } = useContext(AppContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
+
+  if (!userProfile) return null;
 
   return (
-    <div className="cart-container" style={{ padding: '140px 6% 90px' }}>
-      <div className="cart-items glass">
-        <h2>Your Profile</h2>
-        <br />
-        <div className="profile-details">
-          <div className="summary-row">
-            <span>Name</span>
-            <span>John Doe</span>
-          </div>
-          <div className="summary-row">
-            <span>Email</span>
-            <span>john.doe@example.com</span>
-          </div>
-          <div className="summary-row">
-            <span>Phone</span>
-            <span>+91 98765 43210</span>
-          </div>
-        </div>
-        <br />
-        <Link to="/orders">
-          <button className="btn btn-secondary" style={{ marginRight: '10px' }}>View Orders</button>
-        </Link>
-        <Link to="/favorites">
-          <button className="btn btn-secondary">View Favorites</button>
-        </Link>
+    <div style={{ padding: '140px 6% 90px', maxWidth: '800px', margin: '0 auto' }}>
+      <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: '40px' }}>My Profile</h1>
       </div>
 
-      <div className="summary glass">
-        <h2>Settings</h2>
+      <div className="glass" style={{ padding: '40px', borderRadius: 'var(--radius-lg)', textAlign: 'center', marginBottom: '40px' }}>
+        <div style={{ width: '100px', height: '100px', borderRadius: '50%', background: 'linear-gradient(135deg, var(--accent), var(--accent-2))', color: '#fff', fontSize: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
+          {userProfile.name.charAt(0).toUpperCase()}
+        </div>
+        <h2 style={{ fontSize: '28px', marginBottom: '10px' }}>{userProfile.name}</h2>
+        <p style={{ color: 'var(--text-muted)' }}>{userProfile.age} yrs • {userProfile.gender} • Goal: {userProfile.goal}</p>
         
-        <div style={{ marginTop: '20px' }}>
-          <label style={{ display: 'block', marginBottom: '10px', color: 'var(--text-muted)' }}>Personal Goal</label>
-          <select 
-            value={userGoal} 
-            onChange={(e) => setUserGoal(e.target.value)}
-            style={{ 
-              width: '100%', 
-              padding: '10px', 
-              background: 'var(--bg)', 
-              color: 'var(--text)', 
-              border: '1px solid var(--surface-border)',
-              borderRadius: 'var(--radius-sm)'
-            }}
-          >
-            <option value="Lose Fat">Lose Fat</option>
-            <option value="Build Muscle">Build Muscle</option>
-            <option value="Maintain Weight">Maintain Weight</option>
-            <option value="Eat Healthier">Eat Healthier</option>
-          </select>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '30px', marginTop: '30px' }}>
+          <div>
+            <div style={{ fontSize: '24px', fontWeight: 'bold' }}>{userProfile.tdee}</div>
+            <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>Daily kcal</div>
+          </div>
+          <div>
+            <div style={{ fontSize: '24px', fontWeight: 'bold' }}>{streak}</div>
+            <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>Day Streak</div>
+          </div>
+          <div>
+            <div style={{ fontSize: '24px', fontWeight: 'bold' }}>{bitePoints}</div>
+            <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>BitePoints</div>
+          </div>
         </div>
+      </div>
 
-        <div className="summary-row" style={{ marginTop: '20px' }}>
-          <span>Notifications</span>
-          <span>Enabled</span>
+      <div className="glass" style={{ padding: '30px', borderRadius: 'var(--radius-lg)', marginBottom: '40px' }}>
+        <h3 style={{ marginBottom: '20px' }}>Personal Information</h3>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+          <div>
+            <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Height</div>
+            <div style={{ fontWeight: '500' }}>{userProfile.height} cm</div>
+          </div>
+          <div>
+            <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Weight</div>
+            <div style={{ fontWeight: '500' }}>{userProfile.weight} kg</div>
+          </div>
+          <div>
+            <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Activity Level</div>
+            <div style={{ fontWeight: '500' }}>{userProfile.activity} Multiplier</div>
+          </div>
+          <div>
+            <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Diet Preference</div>
+            <div style={{ fontWeight: '500', textTransform: 'capitalize' }}>{userProfile.diet}</div>
+          </div>
         </div>
-        <div className="summary-row">
-          <span>Dark Mode</span>
-          <span>System Default</span>
-        </div>
-        <hr style={{ borderColor: 'var(--surface-border)', margin: '15px 0' }} />
-        <Link to="/login">
-          <button className="btn btn-dark" style={{ width: '100%' }}>Logout</button>
-        </Link>
+      </div>
+
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+        <button className="btn btn-secondary" onClick={() => navigate('/onboarding')} style={{ width: '100%' }}>Edit Profile Metrics</button>
+        <button className="btn" style={{ width: '100%', background: 'rgba(239, 68, 68, 0.1)', color: 'var(--danger)', border: 'none' }} onClick={handleLogout}>Log Out</button>
       </div>
     </div>
   );

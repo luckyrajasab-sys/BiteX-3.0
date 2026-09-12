@@ -1,97 +1,102 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
 
 const Dashboard = () => {
-  const { consumedFoods, waterGlasses, setWaterGlasses, resetDashboard, calculateDailyMacros, userGoal } = useContext(AppContext);
+  const { userProfile, consumedFoods, waterGlasses, logWater, resetDashboard, calculateDailyMacros, streak, bitePoints } = useContext(AppContext);
   const macros = calculateDailyMacros();
 
-  // Basic recommended daily targets (can be personalized further later)
-  const targets = {
-    calories: userGoal === 'Lose Fat' ? 1800 : userGoal === 'Build Muscle' ? 2800 : 2200,
-    protein: userGoal === 'Build Muscle' ? 150 : 70,
-    carbs: 250,
-    fat: 70,
-    fibre: 30
-  };
+  // Mock targets based on TDEE (or default 2000)
+  const targetCals = userProfile?.tdee || 2000;
+  const targetProtein = Math.round((targetCals * 0.3) / 4);
+  const targetCarbs = Math.round((targetCals * 0.4) / 4);
+  const targetFat = Math.round((targetCals * 0.3) / 9);
 
-  const getProgress = (current, target) => Math.min((current / target) * 100, 100);
+  const getPercent = (current, max) => Math.min((current / max) * 100, 100);
+
+  const CircularProgress = ({ percent, color, icon, label, value, max }) => (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <div style={{ position: 'relative', width: '120px', height: '120px', marginBottom: '10px' }}>
+        <svg width="120" height="120" viewBox="0 0 120 120">
+          <circle cx="60" cy="60" r="54" fill="none" stroke="var(--surface-border)" strokeWidth="8" />
+          <circle cx="60" cy="60" r="54" fill="none" stroke={color} strokeWidth="8" strokeDasharray="339.292" strokeDashoffset={339.292 - (339.292 * percent) / 100} strokeLinecap="round" transform="rotate(-90 60 60)" style={{ transition: 'stroke-dashoffset 1s ease-out' }} />
+        </svg>
+        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ fontSize: '24px' }}>{icon}</div>
+          <div style={{ fontSize: '14px', fontWeight: 'bold' }}>{Math.round(percent)}%</div>
+        </div>
+      </div>
+      <div style={{ fontSize: '16px', fontWeight: 'bold' }}>{label}</div>
+      <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>{value} / {max}</div>
+    </div>
+  );
 
   return (
-    <div style={{ padding: '140px 6% 90px' }}>
-      <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: '40px' }}>Nutrition Dashboard</h1>
-        <p style={{ color: 'var(--text-muted)' }}>Goal: <strong>{userGoal}</strong></p>
-      </div>
-
-      <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '20px' }}>
-        <button className="btn btn-secondary" onClick={resetDashboard}>Reset Day</button>
-      </div>
-
-      <div className="dashboard-grid">
-        <div className="dash-card">
-          <div className="dash-header">Calories 🔥</div>
-          <div className="dash-stat">{macros.calories} <span style={{ fontSize: '16px', color: 'var(--text-muted)' }}>/ {targets.calories} kcal</span></div>
-          <div style={{ width: '100%', height: '8px', background: 'var(--surface)', borderRadius: '4px', marginTop: '15px' }}>
-            <div style={{ width: `${getProgress(macros.calories, targets.calories)}%`, height: '100%', background: 'var(--accent)', borderRadius: '4px' }}></div>
-          </div>
+    <div style={{ padding: '140px 6% 90px', maxWidth: '1200px', margin: '0 auto' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px', flexWrap: 'wrap', gap: '20px' }}>
+        <div>
+          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: '36px' }}>
+            Good morning, {userProfile?.name || 'Guest'}
+          </h1>
+          <p style={{ color: 'var(--text-muted)' }}>Here is your daily nutrition summary.</p>
         </div>
-
-        <div className="dash-card">
-          <div className="dash-header">Protein 🥩</div>
-          <div className="dash-stat" style={{ color: 'var(--macro-protein)' }}>{macros.protein} <span style={{ fontSize: '16px', color: 'var(--text-muted)' }}>/ {targets.protein} g</span></div>
-          <div style={{ width: '100%', height: '8px', background: 'var(--surface)', borderRadius: '4px', marginTop: '15px' }}>
-            <div style={{ width: `${getProgress(macros.protein, targets.protein)}%`, height: '100%', background: 'var(--macro-protein)', borderRadius: '4px' }}></div>
+        <div style={{ display: 'flex', gap: '15px' }}>
+          <div className="glass" style={{ padding: '10px 20px', borderRadius: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <span style={{ fontSize: '20px' }}>🔥</span>
+            <div>
+              <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Streak</div>
+              <div style={{ fontWeight: 'bold' }}>{streak} Days</div>
+            </div>
           </div>
-        </div>
-
-        <div className="dash-card">
-          <div className="dash-header">Carbs 🍞</div>
-          <div className="dash-stat" style={{ color: 'var(--macro-carbs)' }}>{macros.carbs} <span style={{ fontSize: '16px', color: 'var(--text-muted)' }}>/ {targets.carbs} g</span></div>
-          <div style={{ width: '100%', height: '8px', background: 'var(--surface)', borderRadius: '4px', marginTop: '15px' }}>
-            <div style={{ width: `${getProgress(macros.carbs, targets.carbs)}%`, height: '100%', background: 'var(--macro-carbs)', borderRadius: '4px' }}></div>
-          </div>
-        </div>
-
-        <div className="dash-card">
-          <div className="dash-header">Fat 🥑</div>
-          <div className="dash-stat" style={{ color: 'var(--macro-fat)' }}>{macros.fat} <span style={{ fontSize: '16px', color: 'var(--text-muted)' }}>/ {targets.fat} g</span></div>
-          <div style={{ width: '100%', height: '8px', background: 'var(--surface)', borderRadius: '4px', marginTop: '15px' }}>
-            <div style={{ width: `${getProgress(macros.fat, targets.fat)}%`, height: '100%', background: 'var(--macro-fat)', borderRadius: '4px' }}></div>
-          </div>
-        </div>
-
-        <div className="dash-card">
-          <div className="dash-header">Fibre 🥦</div>
-          <div className="dash-stat" style={{ color: 'var(--macro-fibre)' }}>{macros.fibre} <span style={{ fontSize: '16px', color: 'var(--text-muted)' }}>/ {targets.fibre} g</span></div>
-          <div style={{ width: '100%', height: '8px', background: 'var(--surface)', borderRadius: '4px', marginTop: '15px' }}>
-            <div style={{ width: `${getProgress(macros.fibre, targets.fibre)}%`, height: '100%', background: 'var(--macro-fibre)', borderRadius: '4px' }}></div>
-          </div>
-        </div>
-
-        <div className="dash-card">
-          <div className="dash-header">Water 💧</div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-            <button className="btn btn-secondary" onClick={() => setWaterGlasses(Math.max(0, waterGlasses - 1))}>-</button>
-            <div className="dash-stat" style={{ color: 'var(--accent-2)' }}>{waterGlasses} <span style={{ fontSize: '16px', color: 'var(--text-muted)' }}>/ 8 glasses</span></div>
-            <button className="btn btn-secondary" onClick={() => setWaterGlasses(waterGlasses + 1)}>+</button>
+          <div className="glass" style={{ padding: '10px 20px', borderRadius: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <span style={{ fontSize: '20px' }}>🏅</span>
+            <div>
+              <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>BitePoints</div>
+              <div style={{ fontWeight: 'bold' }}>{bitePoints} BP</div>
+            </div>
           </div>
         </div>
       </div>
 
-      <div style={{ marginTop: '50px' }}>
-        <h2>Foods Logged Today</h2>
-        {consumedFoods.length > 0 ? (
-          <div style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            {consumedFoods.map((food, idx) => (
-              <div key={idx} className="glass" style={{ padding: '15px', borderRadius: 'var(--radius-sm)', display: 'flex', justifyContent: 'space-between' }}>
-                <span>{food.name}</span>
-                <span style={{ color: 'var(--accent)' }}>🔥 {food.calories} kcal</span>
-              </div>
+      <div className="glass" style={{ padding: '40px', borderRadius: 'var(--radius-lg)', marginBottom: '40px' }}>
+        <h2 style={{ marginBottom: '30px', textAlign: 'center' }}>Today's Progress</h2>
+        
+        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', gap: '30px' }}>
+          <CircularProgress percent={getPercent(macros.calories, targetCals)} color="var(--accent)" icon="⚡" label="Calories" value={macros.calories} max={`${targetCals} kcal`} />
+          <CircularProgress percent={getPercent(macros.protein, targetProtein)} color="var(--info)" icon="🥩" label="Protein" value={macros.protein} max={`${targetProtein}g`} />
+          <CircularProgress percent={getPercent(macros.carbs, targetCarbs)} color="var(--warning)" icon="🍞" label="Carbs" value={macros.carbs} max={`${targetCarbs}g`} />
+          <CircularProgress percent={getPercent(waterGlasses, 8)} color="#38BDF8" icon="💧" label="Water" value={waterGlasses} max={`8 gls`} />
+        </div>
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '30px' }}>
+        <div className="glass" style={{ padding: '30px', borderRadius: 'var(--radius-lg)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+            <h3>Water Tracker</h3>
+            <button className="btn btn-secondary" onClick={logWater} style={{ padding: '8px 16px' }}>+1 Glass</button>
+          </div>
+          <div style={{ display: 'flex', gap: '10px' }}>
+            {[...Array(8)].map((_, i) => (
+              <div key={i} style={{ flex: 1, height: '40px', background: i < waterGlasses ? '#38BDF8' : 'var(--surface-border)', borderRadius: '8px', transition: '0.3s' }}></div>
             ))}
           </div>
-        ) : (
-          <p style={{ color: 'var(--text-muted)', marginTop: '20px' }}>No foods logged yet. Go to Explore or Menu to add foods!</p>
-        )}
+        </div>
+
+        <div className="glass" style={{ padding: '30px', borderRadius: 'var(--radius-lg)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+            <h3>Meals Logged ({consumedFoods.length})</h3>
+            <button className="btn btn-secondary" onClick={resetDashboard} style={{ padding: '8px 16px' }}>End Day</button>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', maxHeight: '200px', overflowY: 'auto' }}>
+            {consumedFoods.map((food, idx) => (
+              <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px', background: 'var(--bg-alt)', borderRadius: '10px' }}>
+                <span style={{ fontWeight: '500' }}>{food.name}</span>
+                <span style={{ color: 'var(--text-muted)', fontSize: '14px' }}>{food.calories} kcal</span>
+              </div>
+            ))}
+            {consumedFoods.length === 0 && <p style={{ color: 'var(--text-muted)' }}>No meals logged yet today.</p>}
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -1,38 +1,89 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
 
 const Navbar = () => {
   const { cart } = useContext(AppContext);
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Close menu on route change
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location]);
 
   return (
-    <nav className="navbar" style={{ background: 'rgba(11, 18, 32, 0.85)' }}>
-      <Link to="/" className="logo">
-        <svg className="logo-mark" width="32" height="32" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="17" cy="17" r="15" fill="url(#biteGrad)"/>
-          <circle cx="25" cy="9" r="7.5" fill="#0B1220"/>
-          <path d="M24 5 L25.6 8 L28.8 6.4 L27 9.4 L30 10.6 L26.6 11.4 L27 14.6 L24.7 12.2 L22.3 14.6 L22.7 11.4 L19.4 10.6 L22.4 9.4 L20.6 6.4 Z" fill="#10B981"/>
-          <defs>
-            <linearGradient id="biteGrad" x1="2" y1="2" x2="32" y2="32" gradientUnits="userSpaceOnUse">
-              <stop stopColor="#3B82F6"/>
-              <stop offset="1" stopColor="#38BDF8"/>
-            </linearGradient>
-          </defs>
-        </svg>
-        <span>Bite<span className="accent-x" style={{ color: '#10B981' }}>X</span></span>
-        <span className="version-pill" style={{ background: 'rgba(16,185,129,0.2)', color: '#10B981' }}>Health</span>
-      </Link>
-      <div className="nav-links">
-        <Link to="/">Home</Link>
-        <Link to="/explore">Explore</Link>
-        <Link to="/meal-planner">Planner</Link>
-        <Link to="/smart-swaps">Swaps</Link>
-        <Link to="/dashboard">Dashboard</Link>
-        <Link to="/assistant">Assistant</Link>
-        <Link to="/cart">Cart <span className="cart-badge" style={{ display: cart.length > 0 ? 'inline-flex' : 'none' }}>{cart.length}</span></Link>
-        <Link to="/profile">Profile</Link>
-      </div>
-    </nav>
+    <div className="navbar-wrapper">
+      <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
+        <Link to="/" className="logo">
+          <svg className="logo-mark" width="32" height="32" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17 2L30 9.5V24.5L17 32L4 24.5V9.5L17 2Z" fill="url(#hexGrad)" />
+            <path d="M17 7C17 7 24 10 24 17C24 24 17 27 17 27C17 27 10 24 10 17C10 10 17 7 17 7Z" fill="#FFFFFF" opacity="0.9"/>
+            <path d="M17 12V27" stroke="#10B981" strokeWidth="2" strokeLinecap="round"/>
+            <defs>
+              <linearGradient id="hexGrad" x1="4" y1="2" x2="30" y2="32" gradientUnits="userSpaceOnUse">
+                <stop stopColor="#10B981"/>
+                <stop offset="1" stopColor="#059669"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <span style={{ color: 'var(--text)' }}>Bite<span className="accent-x">X</span></span>
+        </Link>
+
+        {/* Desktop Links */}
+        <div className="nav-links desktop-nav">
+          <Link to="/">Home</Link>
+          <Link to="/explore">Explore</Link>
+          <Link to="/calculator">Calculator</Link>
+          <Link to="/diet-plan">Diet Plans</Link>
+          <Link to="/meal-planner">Planner</Link>
+          <Link to="/dashboard">Nutrition</Link>
+          <Link to="/rewards">Rewards</Link>
+          <Link to="/profile">Profile</Link>
+          <Link to="/cart" style={{ display: 'flex', alignItems: 'center' }}>
+            Cart
+            {cart.length > 0 && <span className="cart-badge" style={{ display: 'inline-flex' }}>{cart.length}</span>}
+          </Link>
+        </div>
+
+        {/* Mobile Toggle */}
+        <button 
+          className="mobile-menu-btn" 
+          onClick={() => setMenuOpen(!menuOpen)}
+          style={{ background: 'none', border: 'none', fontSize: '24px', cursor: 'pointer', color: 'var(--text)' }}
+        >
+          {menuOpen ? '✕' : '☰'}
+        </button>
+
+        {/* Mobile Dropdown */}
+        {menuOpen && (
+          <div className="mobile-nav glass" style={{
+            position: 'absolute', top: '100%', left: '0', width: '100%',
+            padding: '20px', borderRadius: '20px', marginTop: '10px',
+            display: 'flex', flexDirection: 'column', gap: '15px'
+          }}>
+            <Link to="/">Home</Link>
+            <Link to="/explore">Explore</Link>
+            <Link to="/calculator">Calculator</Link>
+            <Link to="/diet-plan">Diet Plans</Link>
+            <Link to="/meal-planner">Planner</Link>
+            <Link to="/dashboard">Nutrition</Link>
+            <Link to="/rewards">Rewards</Link>
+            <Link to="/profile">Profile</Link>
+            <Link to="/cart">Cart {cart.length > 0 && `(${cart.length})`}</Link>
+          </div>
+        )}
+      </nav>
+    </div>
   );
 };
 

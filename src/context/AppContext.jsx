@@ -12,36 +12,77 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+  // Auth & General
+  const [userProfile, setUserProfile] = useState(() => safeParse('userProfile', null)); // null means not onboarded
+  const [toast, setToast] = useState(null);
+
+  // E-commerce (Cart, Favorites, Orders)
   const [cart, setCart] = useState(() => safeParse('cart', []));
   const [favorites, setFavorites] = useState(() => safeParse('favorites', []));
   const [orders, setOrders] = useState(() => safeParse('orders', []));
   const [lastOrder, setLastOrder] = useState(() => localStorage.getItem('lastOrder') || '');
-  const [toast, setToast] = useState(null);
 
-  // Health Data
-  const [userGoal, setUserGoal] = useState(() => localStorage.getItem('userGoal') || 'Eat Healthier');
-  const defaultMealPlan = { breakfast: [], lunch: [], snacks: [], dinner: [] };
-  const [mealPlan, setMealPlan] = useState(() => safeParse('mealPlan', defaultMealPlan));
+  // Gamification (BitePoints, Streaks)
+  const [bitePoints, setBitePoints] = useState(() => {
+    const bp = localStorage.getItem('bitePoints');
+    return bp ? parseInt(bp) : 0;
+  });
+  const [streak, setStreak] = useState(() => {
+    const s = localStorage.getItem('streak');
+    return s ? parseInt(s) : 0;
+  });
+
+  // Health Tracking (Dashboard, Weekly Planner)
+  const defaultWeeklyPlan = {
+    Monday: { breakfast: [], lunch: [], snacks: [], dinner: [] },
+    Tuesday: { breakfast: [], lunch: [], snacks: [], dinner: [] },
+    Wednesday: { breakfast: [], lunch: [], snacks: [], dinner: [] },
+    Thursday: { breakfast: [], lunch: [], snacks: [], dinner: [] },
+    Friday: { breakfast: [], lunch: [], snacks: [], dinner: [] },
+    Saturday: { breakfast: [], lunch: [], snacks: [], dinner: [] },
+    Sunday: { breakfast: [], lunch: [], snacks: [], dinner: [] },
+  };
+  const [weeklyPlan, setWeeklyPlan] = useState(() => safeParse('weeklyPlan', defaultWeeklyPlan));
   const [consumedFoods, setConsumedFoods] = useState(() => safeParse('consumedFoods', []));
   const [waterGlasses, setWaterGlasses] = useState(() => {
     const w = localStorage.getItem('waterGlasses');
     return w ? parseInt(w) : 0;
   });
 
+  // Effects to sync with LocalStorage
+  useEffect(() => { localStorage.setItem('userProfile', JSON.stringify(userProfile)); }, [userProfile]);
   useEffect(() => { localStorage.setItem('cart', JSON.stringify(cart)); }, [cart]);
   useEffect(() => { localStorage.setItem('favorites', JSON.stringify(favorites)); }, [favorites]);
   useEffect(() => { localStorage.setItem('orders', JSON.stringify(orders)); }, [orders]);
   useEffect(() => { localStorage.setItem('lastOrder', lastOrder); }, [lastOrder]);
-  useEffect(() => { localStorage.setItem('userGoal', userGoal); }, [userGoal]);
-  useEffect(() => { localStorage.setItem('mealPlan', JSON.stringify(mealPlan)); }, [mealPlan]);
+  useEffect(() => { localStorage.setItem('bitePoints', bitePoints); }, [bitePoints]);
+  useEffect(() => { localStorage.setItem('streak', streak); }, [streak]);
+  useEffect(() => { localStorage.setItem('weeklyPlan', JSON.stringify(weeklyPlan)); }, [weeklyPlan]);
   useEffect(() => { localStorage.setItem('consumedFoods', JSON.stringify(consumedFoods)); }, [consumedFoods]);
   useEffect(() => { localStorage.setItem('waterGlasses', waterGlasses); }, [waterGlasses]);
 
+  // Methods
   const showToast = (message, type = 'success') => {
     setToast({ message, type });
     setTimeout(() => setToast(null), 2600);
   };
 
+  const addBitePoints = (amount, reason) => {
+    setBitePoints(prev => prev + amount);
+    showToast(`+${amount} BitePoints: ${reason}`, 'success');
+  };
+
+  // Auth Methods
+  const completeOnboarding = (profileData) => {
+    setUserProfile(profileData);
+    addBitePoints(50, 'Profile Completed');
+  };
+  const logout = () => {
+    setUserProfile(null);
+    showToast('Logged out successfully', 'info');
+  };
+
+  // Cart Methods
   const addToCart = (item, quantity = 1, notes = '') => {
     setCart((prev) => {
       const existing = prev.find(i => i.id === item.id);
@@ -53,24 +94,19 @@ export const AppProvider = ({ children }) => {
       return [...prev, { ...item, quantity, notes }];
     });
   };
-
   const updateCartQuantity = (id, change) => {
-    setCart((prev) => {
-      return prev.map(item => {
-        if (item.id === id) {
-          const newQ = item.quantity + change;
-          return newQ > 0 ? { ...item, quantity: newQ } : item;
-        }
-        return item;
-      });
-    });
+    setCart((prev) => prev.map(item => {
+      if (item.id === id) {
+        const newQ = item.quantity + change;
+        return newQ > 0 ? { ...item, quantity: newQ } : item;
+      }
+      return item;
+    }));
   };
-
   const removeFromCart = (id) => {
     setCart((prev) => prev.filter(i => i.id !== id));
     showToast('Item removed from cart');
   };
-
   const clearCart = () => setCart([]);
 
   const toggleFavorite = (item) => {
@@ -85,16 +121,12 @@ export const AppProvider = ({ children }) => {
       }
     });
   };
-
   const isFavorite = (id) => favorites.some((f) => f.id === id);
 
   const placeOrder = (paymentMethod, address) => {
-    if (cart.length === 0) {
-      showToast('Your cart is empty', 'danger');
-      return false;
-    }
+    if (cart.length === 0) return false;
     const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    const total = subtotal + 40; // Flat delivery fee
+    const total = subtotal + 40; 
     
     const newOrder = {
       id: 'BX' + Math.floor(100000 + Math.random() * 900000),
@@ -113,31 +145,49 @@ export const AppProvider = ({ children }) => {
     return newOrder.id;
   };
 
-  // Health Methods
-  const addFoodToMealPlan = (mealType, item) => {
-    setMealPlan(prev => ({
+  // Weekly Planner Methods
+  const addFoodToWeeklyPlan = (day, mealType, item) => {
+    setWeeklyPlan(prev => ({
       ...prev,
-      [mealType]: [...prev[mealType], item]
+      [day]: {
+        ...prev[day],
+        [mealType]: [...prev[day][mealType], item]
+      }
     }));
-    showToast(`${item.name} added to ${mealType}`);
+    showToast(`${item.name} added to ${day}'s ${mealType}`);
+  };
+  const removeFoodFromWeeklyPlan = (day, mealType, index) => {
+    setWeeklyPlan(prev => ({
+      ...prev,
+      [day]: {
+        ...prev[day],
+        [mealType]: prev[day][mealType].filter((_, i) => i !== index)
+      }
+    }));
+  };
+  const replaceWeeklyPlan = (newPlan) => {
+    setWeeklyPlan(newPlan);
+    showToast('Diet plan successfully generated!');
   };
 
-  const removeFoodFromMealPlan = (mealType, index) => {
-    setMealPlan(prev => ({
-      ...prev,
-      [mealType]: prev[mealType].filter((_, i) => i !== index)
-    }));
-  };
-
+  // Health Logging
   const logFood = (item) => {
     setConsumedFoods(prev => [...prev, { ...item, loggedAt: new Date().toISOString() }]);
-    showToast(`Logged ${item.name} to Dashboard`);
+    addBitePoints(10, 'Meal Logged');
+  };
+  
+  const logWater = () => {
+    setWaterGlasses(prev => {
+      if (prev + 1 === 8) addBitePoints(20, 'Daily Water Goal Met!');
+      return prev + 1;
+    });
   };
 
   const resetDashboard = () => {
     setConsumedFoods([]);
     setWaterGlasses(0);
-    showToast('Dashboard reset for a new day!', 'info');
+    setStreak(prev => prev + 1);
+    addBitePoints(5, 'New Day Streak');
   };
 
   const calculateDailyMacros = () => {
@@ -155,30 +205,17 @@ export const AppProvider = ({ children }) => {
   return (
     <AppContext.Provider
       value={{
-        cart,
-        addToCart,
-        updateCartQuantity,
-        removeFromCart,
-        clearCart,
-        favorites,
-        toggleFavorite,
-        isFavorite,
-        orders,
-        placeOrder,
-        lastOrder,
-        toast,
-        showToast,
-        userGoal,
-        setUserGoal,
-        mealPlan,
-        addFoodToMealPlan,
-        removeFoodFromMealPlan,
-        consumedFoods,
-        logFood,
-        waterGlasses,
-        setWaterGlasses,
-        resetDashboard,
-        calculateDailyMacros
+        userProfile, setUserProfile, completeOnboarding, logout,
+        bitePoints, setBitePoints, addBitePoints,
+        streak, setStreak,
+        cart, addToCart, updateCartQuantity, removeFromCart, clearCart,
+        favorites, toggleFavorite, isFavorite,
+        orders, placeOrder, lastOrder,
+        toast, showToast,
+        weeklyPlan, addFoodToWeeklyPlan, removeFoodFromWeeklyPlan, replaceWeeklyPlan,
+        consumedFoods, logFood,
+        waterGlasses, logWater,
+        resetDashboard, calculateDailyMacros
       }}
     >
       {children}

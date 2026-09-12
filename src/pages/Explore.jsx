@@ -8,7 +8,7 @@ const Explore = () => {
   const [activeFilter, setActiveFilter] = useState('All');
   const [sortBy, setSortBy] = useState('score-desc');
 
-  const filters = ['All', 'High Protein', 'Vegan', 'Vegetarian', 'Indian', 'Low Calorie'];
+  const filters = ['All', 'High Protein', 'Vegan', 'Vegetarian', 'Indian', 'Europe', 'East Asia', 'Pescatarian', 'Low Calorie'];
 
   useEffect(() => {
     const handler = setTimeout(() => {

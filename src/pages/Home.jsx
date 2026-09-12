@@ -1,84 +1,67 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import FoodCard from '../components/FoodCard';
-import { menuData } from '../data/menu';
-import { AppContext } from '../context/AppContext';
 
 const Home = () => {
-  const { userGoal } = useContext(AppContext);
-
-  // Simple filtering for display sections
-  const highProtein = menuData.filter(item => item.tags?.includes('High Protein')).slice(0, 4);
-  const indianFoods = menuData.filter(item => item.tags?.includes('Indian')).slice(0, 4);
-  const recommended = menuData.filter(item => item.healthyScore >= 85).slice(0, 4);
-  const popular = menuData.slice(4, 8);
-
   return (
-    <>
+    <div>
       <section className="hero">
         <div className="hero-text">
-          <span className="eyebrow" style={{ color: 'var(--success)' }}>🌱 The New BiteX</span>
-          <h1>
-            Eat Smart.<br />
-            <em>Bite Better.</em>
-          </h1>
-          <p>
-            Discover food that fits your goals, lifestyle, and nutrition. Your journey to a healthier you starts with every bite.
-          </p>
+          <div className="eyebrow">✨ BiteX 3.0</div>
+          <h1>Eat Smart.<br/><em>Live Better.</em></h1>
+          <p>Personalized nutrition, healthy food and smarter choices — built around you.</p>
           <div className="hero-cta">
             <Link to="/explore">
-              <button className="btn btn-primary" style={{ background: 'var(--success)' }}>Explore Healthy Foods</button>
+              <button className="btn btn-primary">Explore Food</button>
             </Link>
-            <Link to="/meal-planner">
-              <button className="btn btn-secondary">Build My Meal Plan</button>
+            <Link to="/onboarding">
+              <button className="btn btn-secondary">Build My Plan</button>
             </Link>
           </div>
         </div>
+        
         <div className="hero-image">
-          <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=1200&auto=format&fit=crop" alt="Healthy Food Hero" />
-          <div className="hero-stat-card glass">
-            <div className="num" style={{ color: 'var(--success)', fontSize: '24px' }}>Goal:</div>
-            <div className="label">{userGoal}</div>
+          <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=1200&auto=format&fit=crop" alt="Fresh healthy bowl" style={{ objectFit: 'cover' }} />
+          
+          <div className="hero-stat-card glass" style={{ top: '10%', left: '-30px', animationDelay: '0s' }}>
+            <div className="num">42g</div>
+            <div className="label">Protein<br/>Packed</div>
+          </div>
+          
+          <div className="hero-stat-card glass" style={{ bottom: '15%', right: '-30px', animationDelay: '1.5s', flexDirection: 'row-reverse' }}>
+            <div className="num">350</div>
+            <div className="label" style={{ textAlign: 'right' }}>Low<br/>Calories</div>
           </div>
         </div>
       </section>
 
-      <section className="menu-grid" style={{ padding: '0 6% 60px' }}>
-        <h2 className="section-title">Recommended For You</h2>
+      <section className="section" style={{ background: 'var(--bg-alt)' }}>
+        <div style={{ textAlign: 'center', marginBottom: '50px' }}>
+          <h2 className="section-title">Your Nutrition Hub</h2>
+          <p className="section-sub" style={{ margin: '0 auto' }}>Tools designed to help you hit your goals and stay consistent.</p>
+        </div>
+        
         <div className="grid">
-          {recommended.map((item) => (
-            <FoodCard key={item.id} item={item} />
-          ))}
+          <div className="card glass" style={{ textAlign: 'center' }}>
+            <div style={{ fontSize: '40px', marginBottom: '20px' }}>🧮</div>
+            <h3>Calorie Calculator</h3>
+            <p>Find your exact daily requirements.</p>
+            <Link to="/calculator" style={{ color: 'var(--accent)', fontWeight: 'bold', marginTop: '10px', display: 'inline-block' }}>Calculate Now →</Link>
+          </div>
+          <div className="card glass" style={{ textAlign: 'center' }}>
+            <div style={{ fontSize: '40px', marginBottom: '20px' }}>🥗</div>
+            <h3>Personalized Diet</h3>
+            <p>AI-generated meal plans for you.</p>
+            <Link to="/diet-plan" style={{ color: 'var(--accent)', fontWeight: 'bold', marginTop: '10px', display: 'inline-block' }}>Get Plan →</Link>
+          </div>
+          <div className="card glass" style={{ textAlign: 'center' }}>
+            <div style={{ fontSize: '40px', marginBottom: '20px' }}>🏅</div>
+            <h3>Earn Rewards</h3>
+            <p>Get BitePoints for eating healthy.</p>
+            <Link to="/rewards" style={{ color: 'var(--accent)', fontWeight: 'bold', marginTop: '10px', display: 'inline-block' }}>View Rewards →</Link>
+          </div>
         </div>
       </section>
-
-      <section className="menu-grid" style={{ padding: '0 6% 60px' }}>
-        <h2 className="section-title">Indian Healthy Foods</h2>
-        <div className="grid">
-          {indianFoods.map((item) => (
-            <FoodCard key={item.id} item={item} />
-          ))}
-        </div>
-      </section>
-
-      <section className="menu-grid" style={{ padding: '0 6% 60px' }}>
-        <h2 className="section-title">High Protein Meals</h2>
-        <div className="grid">
-          {highProtein.map((item) => (
-            <FoodCard key={item.id} item={item} />
-          ))}
-        </div>
-      </section>
-      
-      <section className="menu-grid" style={{ padding: '0 6% 60px' }}>
-        <h2 className="section-title">Popular This Week</h2>
-        <div className="grid">
-          {popular.map((item) => (
-            <FoodCard key={item.id} item={item} />
-          ))}
-        </div>
-      </section>
-    </>
+    </div>
   );
 };
 

@@ -10,7 +10,12 @@ import Toast from './components/Toast';
 // Pages
 import Home from './pages/Home';
 import Menu from './pages/Menu';
-import Restaurants from './pages/Restaurants';
+import Explore from './pages/Explore';
+import SmartSwaps from './pages/SmartSwaps';
+import Dashboard from './pages/Dashboard';
+import MealPlanner from './pages/MealPlanner';
+import WhatCanIMake from './pages/WhatCanIMake';
+import Assistant from './pages/Assistant';
 import Favorites from './pages/Favorites';
 import Cart from './pages/Cart';
 import Orders from './pages/Orders';
@@ -32,7 +37,12 @@ const AppContent = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/menu" element={<Menu />} />
-          <Route path="/restaurants" element={<Restaurants />} />
+          <Route path="/explore" element={<Explore />} />
+          <Route path="/smart-swaps" element={<SmartSwaps />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/meal-planner" element={<MealPlanner />} />
+          <Route path="/what-can-i-make" element={<WhatCanIMake />} />
+          <Route path="/assistant" element={<Assistant />} />
           <Route path="/favorites" element={<Favorites />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/orders" element={<Orders />} />

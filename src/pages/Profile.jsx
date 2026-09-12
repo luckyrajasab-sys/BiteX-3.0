@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AppContext } from '../context/AppContext';
 
 const Profile = () => {
+  const { userGoal, setUserGoal } = useContext(AppContext);
+
   return (
     <div className="cart-container" style={{ padding: '140px 6% 90px' }}>
       <div className="cart-items glass">
@@ -32,6 +35,28 @@ const Profile = () => {
 
       <div className="summary glass">
         <h2>Settings</h2>
+        
+        <div style={{ marginTop: '20px' }}>
+          <label style={{ display: 'block', marginBottom: '10px', color: 'var(--text-muted)' }}>Personal Goal</label>
+          <select 
+            value={userGoal} 
+            onChange={(e) => setUserGoal(e.target.value)}
+            style={{ 
+              width: '100%', 
+              padding: '10px', 
+              background: 'var(--bg)', 
+              color: 'var(--text)', 
+              border: '1px solid var(--surface-border)',
+              borderRadius: 'var(--radius-sm)'
+            }}
+          >
+            <option value="Lose Fat">Lose Fat</option>
+            <option value="Build Muscle">Build Muscle</option>
+            <option value="Maintain Weight">Maintain Weight</option>
+            <option value="Eat Healthier">Eat Healthier</option>
+          </select>
+        </div>
+
         <div className="summary-row" style={{ marginTop: '20px' }}>
           <span>Notifications</span>
           <span>Enabled</span>
